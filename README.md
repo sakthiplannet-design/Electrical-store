@@ -22,6 +22,10 @@ npm run build   # static site in dist/
 2. Adjust `categories` if needed.
 3. Set `DEMO_CATALOG = false` to remove the "sample range" note.
 
+## Product photos and brand logos
+
+Demo product photos in `public/products/` are official manufacturer images (Fybros, GM, Philips), listed with their source URLs in `src/data/product-images.js`. Brand logos are in `public/brands/`. Replace both with the shop's own photos and approved logos when the real catalogue arrives; items without a photo fall back to a drawn illustration.
+
 ## How ordering works
 
 Customers add products to **My list** (kept on their device), then **Send list on WhatsApp**. The message lists every item with its size and quantity, plus their name and note. The shop replies with availability and price; the customer pays and collects in store. No online payment.

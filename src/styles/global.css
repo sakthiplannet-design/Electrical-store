@@ -303,8 +303,11 @@ textarea {
 .bulb .halo {
   fill: var(--tone);
   opacity: 0.28;
-  animation: twinkle 2.4s ease-in-out infinite alternate;
-  animation-delay: var(--d);
+}
+.bulb .glass,
+.bulb .halo {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 .bulb.tone-gold {
   --tone: var(--gold);
@@ -313,18 +316,109 @@ textarea {
   --tone: var(--marigold);
 }
 .bulb.tone-rani {
-  --tone: var(--rani);
+  --tone: #ff4f8b;
 }
 .bulb.tone-peacock {
   --tone: #3fe0c8;
 }
+/* chase: a pulse runs along the string */
+.mode-chase .bulb .halo,
+.mode-chase .bulb .glass {
+  animation: chase 1.8s linear infinite;
+  animation-delay: calc(var(--i) * 72ms);
+}
+@keyframes chase {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  8% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  24% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+}
+/* alternate: odd and even bulbs swap */
+.mode-alternate .bulb .halo,
+.mode-alternate .bulb .glass {
+  animation: alt 0.9s steps(1) infinite;
+}
+.mode-alternate .bulb.odd .halo,
+.mode-alternate .bulb.odd .glass {
+  animation-delay: 0.45s;
+}
+@keyframes alt {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.18;
+  }
+}
+/* twinkle: each bulb at its own pace */
+.mode-twinkle .bulb .halo,
+.mode-twinkle .bulb .glass {
+  animation: twinkle 1.3s ease-in-out infinite alternate;
+  animation-delay: calc(var(--r) * -1);
+}
 @keyframes twinkle {
   from {
-    opacity: 0.12;
+    opacity: 0.15;
   }
   to {
-    opacity: 0.5;
+    opacity: 1;
   }
+}
+/* wave: brightness rolls along the string */
+.mode-wave .bulb .halo,
+.mode-wave .bulb .glass {
+  animation: wave 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 110ms);
+}
+@keyframes wave {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+/* burst: everything flashes together */
+.mode-burst .bulb .halo,
+.mode-burst .bulb .glass {
+  animation: flash 0.7s ease-out infinite;
+}
+@keyframes flash {
+  0% {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+.fireworks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-inner,
+.diyas,
+.toran {
+  position: relative;
+  z-index: 1;
+}
+.toran {
+  position: absolute;
 }
 .hero-inner {
   max-width: var(--max);
@@ -549,22 +643,96 @@ textarea {
   gap: 12px;
   flex-wrap: wrap;
 }
-.brand-name {
-  font: 800 1.35rem/1 var(--display);
-  padding: 10px 20px 8px;
-  border-radius: 12px;
-  border: 1px solid var(--line-2);
-  background: var(--night-2);
-  letter-spacing: 0.02em;
+.brand-logo {
+  display: grid;
+  place-items: center;
+  height: 64px;
+  padding: 10px 18px;
+  border-radius: 14px;
+  background: #fff;
 }
-.brand-gm {
-  color: #ff6b5c;
+.brand-logo img {
+  display: block;
+  height: 44px;
+  width: auto;
 }
-.brand-fybros {
-  color: #ff5a7e;
+.brand-logo img[src$='philips.svg'] {
+  height: 22px;
 }
-.brand-philips {
-  color: #6aa5ff;
+
+/* 3D showroom */
+.showroom {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 56px) var(--pad) 8px;
+  display: grid;
+  gap: 18px;
+}
+.showroom-stage {
+  position: relative;
+  aspect-ratio: 2.6;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 90% at 50% 100%, rgb(255 194 61 / 0.16), transparent 70%),
+    var(--night-2);
+  border: 1px solid var(--line);
+  touch-action: pan-y;
+}
+.showroom-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+  cursor: grab;
+}
+.showroom-stage.has-3d canvas {
+  opacity: 1;
+}
+.showroom-fallback {
+  list-style: none;
+  margin: 0;
+  padding: 5% 6%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5%;
+  align-items: center;
+  transition: opacity 400ms var(--ease-out);
+}
+.showroom-fallback img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  padding: 10%;
+}
+.showroom-stage.has-3d .showroom-fallback {
+  opacity: 0;
+}
+.showroom-labels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+.showroom-labels a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 1.1rem/1.2 var(--display);
+  color: var(--gold);
+  text-decoration: none;
+}
+.showroom-labels a:hover {
+  text-decoration: underline;
 }
 
 /* Sections */
@@ -597,23 +765,44 @@ textarea {
   margin: 0 auto;
   padding: clamp(40px, 6vw, 72px) var(--pad);
 }
-.controls {
-  position: sticky;
-  top: 64px;
-  z-index: 10;
+.shop {
   display: grid;
-  gap: 12px;
-  margin: 26px 0 22px;
-  padding: 14px 0 12px;
-  background: linear-gradient(var(--night) 80%, transparent);
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 32px);
+  align-items: start;
+  margin-top: 26px;
+}
+.filters {
+  position: sticky;
+  top: 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--night-2);
+  border: 1px solid var(--line);
+  max-height: calc(100svh - 96px);
+  overflow-y: auto;
+}
+.filters-title {
+  font: 700 0.85rem/1 var(--body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-3);
+  margin-top: 4px;
+}
+.results {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
 }
 .search {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: 460px;
   padding: 0 16px;
-  min-height: 50px;
+  min-height: 48px;
   border-radius: 999px;
   border: 1px solid var(--line-2);
   background: var(--night-2);
@@ -629,6 +818,7 @@ textarea {
 }
 .search input {
   flex: 1;
+  width: 100%;
   min-width: 0;
   border: 0;
   outline: 0;
@@ -640,46 +830,56 @@ textarea {
   color: var(--cream-3);
 }
 .chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-bottom: 2px;
+  display: grid;
+  gap: 6px;
 }
 .chip {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
   align-items: center;
-  gap: 8px;
-  flex: none;
-  min-height: 42px;
-  padding: 4px 16px 4px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line-2);
-  background: var(--night-2);
+  gap: 10px;
+  min-height: 46px;
+  padding: 6px 10px 6px 8px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--cream-2);
   font-weight: 600;
-  white-space: nowrap;
+  text-align: left;
   cursor: pointer;
   transition:
     background-color 160ms var(--ease-out),
     color 160ms var(--ease-out),
     border-color 160ms var(--ease-out);
 }
-.chip[data-cat='all'] {
-  padding-left: 16px;
-}
 .chip-art {
-  width: 26px;
-  height: 26px;
-  padding: 3px;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
   border-radius: 50%;
   background: var(--tone, var(--night-4));
   color: #fff;
 }
+.chip-all {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--gold);
+  font-size: 1rem;
+}
 .chip-art svg {
   width: 100%;
   height: 100%;
+}
+.chip-count {
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--night-4);
+  color: var(--cream-2);
+  font-size: 0.85rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 .chip:hover {
   border-color: var(--gold);
@@ -688,6 +888,10 @@ textarea {
 .chip[aria-pressed='true'] {
   background: var(--gold);
   border-color: var(--gold);
+  color: var(--ink-on-gold);
+}
+.chip[aria-pressed='true'] .chip-count {
+  background: rgb(42 18 4 / 0.15);
   color: var(--ink-on-gold);
 }
 .count {
@@ -725,8 +929,8 @@ textarea {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
 }
 .card {
   display: grid;
@@ -767,6 +971,41 @@ textarea {
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle, rgb(255 255 255 / 0.28), transparent 65%);
+}
+.card-photo {
+  position: relative;
+  aspect-ratio: 16 / 12;
+  background: #fff;
+  overflow: hidden;
+}
+.card-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  transition: transform 300ms var(--ease-out);
+}
+.card:hover .card-photo img {
+  transform: scale(1.04);
+}
+.card-badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+  color: #fff;
+}
+.card-badge svg {
+  width: 100%;
+  height: 100%;
+}
+.card-badge .lit {
+  color: #fff3b0;
 }
 .card-art svg {
   width: 44%;
@@ -1223,6 +1462,14 @@ textarea {
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
+.line-photo {
+  grid-row: 1 / 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff;
+  object-fit: contain;
+}
 .line-art {
   grid-row: 1 / 3;
   width: 44px;
@@ -1331,6 +1578,54 @@ textarea {
   }
 }
 
+/* Stacked catalogue */
+@media (max-width: 900px) {
+  .shop {
+    grid-template-columns: 1fr;
+  }
+  .filters {
+    top: 64px;
+    z-index: 10;
+    max-height: none;
+    overflow: visible;
+    padding: 12px;
+    border-radius: 0 0 18px 18px;
+    background: var(--night);
+    box-shadow: 0 12px 20px -16px rgb(0 0 0 / 0.8);
+  }
+  .filters-title {
+    display: none;
+  }
+  .chips {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chip {
+    flex: none;
+    grid-template-columns: 26px auto auto;
+    min-height: 42px;
+    border-radius: 999px;
+    border-color: var(--line-2);
+    background: var(--night-2);
+  }
+  .chip-art {
+    width: 26px;
+    height: 26px;
+  }
+  .chip-count {
+    display: none;
+  }
+  .showroom-stage {
+    aspect-ratio: 1.5;
+  }
+  .showroom-labels a {
+    font-size: 0.95rem;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
 /* Phone */
 @media (max-width: 760px) {
   .brand-word {
@@ -1342,9 +1637,7 @@ textarea {
   .cart-fab {
     display: inline-flex;
   }
-  .chips {
-    flex-wrap: nowrap;
-  }
+
   .hero {
     padding-top: 44px;
   }

@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { shop, t, waLink } from '../data/site.js';
-import { categories, products, DEMO_CATALOG } from '../data/catalog-demo.js';
+import { categories, products, DEMO_CATALOG, productImages } from '../data/catalog-demo.js';
 import { logoSvg } from '../scripts/logo-geometry.js';
 import { icons } from '../scripts/symbols.js';
 import { art, diya } from '../scripts/illustrations.js';
@@ -24,7 +24,7 @@ const openAt = hoursText(shop.hours.open[0], shop.hours.open[1]);
 const bulbs = Array.from({ length: 25 }, (_, i) => {
   const x = 10 + i * 49;
   const y = 18 + Math.sin((i / 24) * Math.PI * 6) * 10 + 14;
-  return { x, y, tone: ['gold', 'marigold', 'rani', 'peacock'][i % 4], d: (i % 7) * 0.35 };
+  return { x, y, i, r: ((i * 37) % 17) / 10, odd: i % 2 === 1, tone: ['gold', 'marigold', 'rani', 'peacock'][i % 4] };
 });
 const wirePath = 'M0 20 ' + bulbs.map((b) => `Q${b.x - 24} ${b.y + 14} ${b.x} ${b.y - 6}`).join(' ') + ' L1240 20';
 
@@ -92,10 +92,11 @@ const ld = {
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <svg class="toran" viewBox="0 0 1240 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <canvas class="fireworks" id="fireworks" aria-hidden="true"></canvas>
+        <svg class="toran mode-chase" id="toran" viewBox="0 0 1240 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <path class="toran-wire" d={wirePath} />
           {bulbs.map((b) => (
-            <g class={`bulb tone-${b.tone}`} style={`--d:${b.d}s`}>
+            <g class={`bulb tone-${b.tone}${b.odd ? ' odd' : ''}`} style={`--i:${b.i};--r:${b.r}s`}>
               <circle cx={b.x} cy={b.y} r="9" class="halo" />
               <circle cx={b.x} cy={b.y} r="4.5" class="glass" />
             </g>
@@ -141,7 +142,29 @@ const ld = {
       <section class="brands" aria-label={L.brandsLine}>
         <p class="brands-label">{L.brandsLine}</p>
         <ul class="brand-list" role="list">
-          {shop.brands.map((b) => <li class={`brand-name brand-${b.toLowerCase()}`}>{b}</li>)}
+          <li class="brand-logo"><img src="/brands/gm.svg" width="173" height="80" alt="GM Modular" /></li>
+          <li class="brand-logo"><img src="/brands/fybros.png" width="104" height="104" alt="Fybros" /></li>
+          <li class="brand-logo"><img src="/brands/philips.svg" width="88" height="16" alt="Philips" /></li>
+        </ul>
+      </section>
+
+      <section class="showroom" aria-labelledby="showroom-title">
+        <div class="section-head">
+          <h2 id="showroom-title">{L.showroomTitle}</h2>
+          <p class="section-lede">{L.showroomLede}</p>
+        </div>
+        <div class="showroom-stage" id="showroom">
+          <canvas id="showroom3d" aria-hidden="true"></canvas>
+          <ul class="showroom-fallback" role="list">
+            {L.showroom.map(([name, , pid]) => (
+              <li><img src={productImages[pid]} width="600" height="600" loading="lazy" decoding="async" alt={name} /></li>
+            ))}
+          </ul>
+        </div>
+        <ul class="showroom-labels" role="list">
+          {L.showroom.map(([name, cat]) => (
+            <li><a href="#products" data-jump-cat={cat}>{name}<span class="ic" set:html={icons.arrow} /></a></li>
+          ))}
         </ul>
       </section>
 
@@ -152,23 +175,27 @@ const ld = {
           {DEMO_CATALOG && <p class="sample-note">{L.sampleNote}</p>}
         </div>
 
-        <div class="controls">
-          <label class="search">
-            <span class="sr-only">{L.search}</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <input type="search" id="search" placeholder={L.search} autocomplete="off" />
-          </label>
-          <div class="chips" role="group" aria-label={L.catalogTitle}>
-            <button type="button" class="chip" data-cat="all" aria-pressed="true">{L.all}</button>
-            {categories.map((c) => (
-              <button type="button" class={`chip tone-${c.tone}`} data-cat={c.id} aria-pressed="false">
-                <span class="chip-art" set:html={art[c.kind]} />{c.name[lang]}
+        <div class="shop">
+          <aside class="filters" aria-label={L.catalogTitle}>
+            <label class="search">
+              <span class="sr-only">{L.search}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <input type="search" id="search" placeholder={L.search} autocomplete="off" />
+            </label>
+            <p class="filters-title">{L.categories}</p>
+            <div class="chips" role="group" aria-label={L.categories}>
+              <button type="button" class="chip" data-cat="all" aria-pressed="true">
+                <span class="chip-art chip-all" aria-hidden="true">✦</span><span class="chip-name">{L.all}</span><span class="chip-count">{products.length}</span>
               </button>
-            ))}
-          </div>
-          <p class="count" id="count" aria-live="polite">{L.showing(products.length)}</p>
-        </div>
-
+              {categories.map((c) => (
+                <button type="button" class={`chip tone-${c.tone}`} data-cat={c.id} aria-pressed="false">
+                  <span class="chip-art" set:html={art[c.kind]} /><span class="chip-name">{c.name[lang]}</span><span class="chip-count">{products.filter((p) => p.cat === c.id).length}</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+          <div class="results">
+            <p class="count" id="count" aria-live="polite">{L.showing(products.length)}</p>
         <ul class="grid" role="list" id="grid">
           {products.map((p) => (
             <li
@@ -176,7 +203,14 @@ const ld = {
               data-cat={p.cat}
               data-search={`${p.brand} ${p.name.en} ${p.name.ta} ${p.spec.en} ${categories.find((c) => c.id === p.cat)?.name.en} ${categories.find((c) => c.id === p.cat)?.name.ta}`.toLowerCase()}
             >
-              <div class={`card-art tone-${toneOf[p.cat]}`} set:html={art[p.kind]} />
+              {productImages[p.id] ? (
+                <div class={`card-photo tone-${toneOf[p.cat]}`}>
+                  <img src={productImages[p.id]} width="600" height="600" loading="lazy" decoding="async" alt={`${p.brand} ${p.name.en}`} />
+                  <span class="card-badge" set:html={art[p.kind]} />
+                </div>
+              ) : (
+                <div class={`card-art tone-${toneOf[p.cat]}`} set:html={art[p.kind]} />
+              )}
               <div class="card-body">
                 <p class="card-brand">{p.brand}</p>
                 <h3 class="card-name">{p.name[lang]}</h3>
@@ -205,6 +239,8 @@ const ld = {
           {L.none}
           <a class="btn btn-ghost" href={waLink(L.waGeneral)} target="_blank" rel="noopener"><span class="ic" set:html={icons.whatsapp} />{L.whatsapp}</a>
         </p>
+          </div>
+        </div>
       </section>
 
       <section class="how" id="how" aria-labelledby="how-title">

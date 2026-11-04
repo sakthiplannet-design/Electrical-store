@@ -4,6 +4,7 @@
 // When the client sends their catalogue, replace `products` (and `categories` if needed)
 // and set DEMO_CATALOG to false; the "sample range" note on the site follows that flag.
 export const DEMO_CATALOG = true;
+export { productImages } from './product-images.js';
 
 export const categories = [
   { id: 'switches', tone: 'marigold', kind: 'switch', name: { en: 'Switches & accessories', ta: 'சுவிட்சுகள் & துணைப் பொருட்கள்' } },
@@ -31,7 +32,7 @@ export const products = [
   // Switches & accessories
   p('fy-zine', 'switches', 'Fybros', 'switch', 'Zine modular switches', 'Zine மாடுலர் சுவிட்சுகள்', 'Modular range, 6 A & 16 A', 'மாடுலர் வகை, 6 A & 16 A', ['6 A one-way', '6 A two-way', '16 A']),
   p('fy-fourx', 'switches', 'Fybros', 'switch', 'Four-x switches', 'Four-x சுவிட்சுகள்', 'Modular switches with matching plates', 'பொருந்தும் பிளேட்களுடன் மாடுலர் சுவிட்சுகள்'),
-  p('fy-woodem', 'switches', 'Fybros', 'plate', 'Wood-em switches & plates', 'Wood-em சுவிட்சுகள் & பிளேட்கள்', 'Wood-finish designer range', 'மர நிற டிசைனர் வகை'),
+  p('fy-woodem', 'switches', 'Fybros', 'plate', 'Wood-em switches & plates', 'Wood-em சுவிட்சுகள் & பிளேட்கள்', 'Designer modular range', 'டிசைனர் மாடுலர் வகை'),
   p('fy-series11', 'switches', 'Fybros', 'switch', 'Series 11 switches', 'Series 11 சுவிட்சுகள்', 'Everyday modular range', 'தினசரி மாடுலர் வகை'),
   p('gm-plates', 'switches', 'GM', 'plate', 'Cover plates', 'கவர் பிளேட்கள்', 'Modular plates for any board size', 'எந்த போர்டுக்கும் மாடுலர் பிளேட்கள்', ['2 module', '4 module', '6 module', '8 module', '12 module', '18 module']),
   p('gm-spike', 'switches', 'GM', 'spike', 'Spike guard', 'ஸ்பைக் கார்டு', 'Multi-socket extension with surge protection', 'சர்ஜ் பாதுகாப்புடன் பல சாக்கெட் எக்ஸ்டென்ஷன்'),
@@ -71,12 +72,11 @@ export const products = [
   p('gm-tpn', 'switchgear', 'GM', 'db', 'GV MCB TPN', 'GV MCB TPN', 'Three phase + neutral protection', 'த்ரீ ஃபேஸ் + நியூட்ரல் பாதுகாப்பு'),
 
   // Home appliances (Philips)
-  p('ph-mixer', 'appliances', 'Philips', 'mixer', 'HL7756 mixer grinder', 'HL7756 மிக்ஸர் கிரைண்டர்', '750 W, 3 jars', '750 W, 3 ஜார்கள்'),
-  p('ph-kettle', 'appliances', 'Philips', 'kettle', 'HD9306 electric kettle', 'HD9306 எலக்ட்ரிக் கெட்டில்', '1.5 L, stainless steel', '1.5 லி, ஸ்டெயின்லெஸ் ஸ்டீல்'),
-  p('ph-dryiron', 'appliances', 'Philips', 'iron', 'HD1172 dry iron', 'HD1172 ட்ரை அயர்ன்', '1000 W', '1000 W'),
-  p('ph-steamiron', 'appliances', 'Philips', 'iron', 'GC1905 steam iron', 'GC1905 ஸ்டீம் அயர்ன்', '1440 W', '1440 W'),
-  p('ph-handsteam', 'appliances', 'Philips', 'steamer', '3000 Series handheld steamer', '3000 சீரிஸ் கையடக்க ஸ்டீமர்', 'STH3010/70', 'STH3010/70'),
-  p('ph-standsteam', 'appliances', 'Philips', 'steamer', 'Easy Touch stand steamer', 'ஈஸி டச் ஸ்டாண்ட் ஸ்டீமர்', 'GC487/89', 'GC487/89'),
+  p('ph-mixer', 'appliances', 'Philips', 'mixer', 'Daily Collection mixer grinder HL7756/00', 'டெய்லி கலெக்ஷன் மிக்ஸர் கிரைண்டர் HL7756/00', '750 W', '750 W'),
+  p('ph-kettle', 'appliances', 'Philips', 'kettle', 'Daily Collection kettle HD9306/06', 'டெய்லி கலெக்ஷன் கெட்டில் HD9306/06', 'Stainless steel electric kettle', 'ஸ்டெயின்லெஸ் ஸ்டீல் எலக்ட்ரிக் கெட்டில்'),
+  p('ph-steamiron', 'appliances', 'Philips', 'iron', 'EasySpeed steam iron GC1905/21', 'ஈஸிஸ்பீட் ஸ்டீம் அயர்ன் GC1905/21', 'Steam iron for everyday ironing', 'தினசரி அயர்னிங்கிற்கான ஸ்டீம் அயர்ன்'),
+  p('ph-handsteam', 'appliances', 'Philips', 'steamer', '3000 Series handheld steamer STH3010/70', '3000 சீரிஸ் கையடக்க ஸ்டீமர் STH3010/70', 'Handheld garment steamer', 'கையடக்க துணி ஸ்டீமர்'),
+  p('ph-standsteam', 'appliances', 'Philips', 'steamer', 'Easy Touch stand steamer GC487/89', 'ஈஸி டச் ஸ்டாண்ட் ஸ்டீமர் GC487/89', 'Stand garment steamer', 'ஸ்டாண்ட் துணி ஸ்டீமர்'),
 
   // Pipes & fittings
   p('gm-pipe', 'pipes', 'GM', 'pipe', 'PVC conduit pipe', 'PVC கண்ட்யூட் பைப்', 'For concealed and surface wiring', 'கன்சீல்டு & சர்ஃபேஸ் வயரிங்கிற்கு', ['20 mm', '25 mm']),
