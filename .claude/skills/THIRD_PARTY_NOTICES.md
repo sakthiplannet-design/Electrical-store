@@ -1,6 +1,6 @@
 # Third-party skills
 
-All skills in this directory are third-party and their files are unmodified, except `design-md/SKILL.md` (see below). The `impeccable` skill also installs `../agents/impeccable-*.md` and the hooks in `../settings.json`.
+All skills in this directory are third-party and their files are unmodified, except `design-md/SKILL.md` and the omitted `img2threejs/CLAUDE.md` (see below). The `impeccable` skill also installs `../agents/impeccable-*.md` and the hooks in `../settings.json`.
 
 ## emilkowalski/skills
 
@@ -299,3 +299,39 @@ The `skill/reference/ios.md` and `skill/reference/android.md` platform reference
 **Original work:** https://github.com/ehmo/platform-design-skills
 **Original license:** MIT
 **Author:** ehmo
+
+## img2threejs/img2threejs
+
+`img2threejs` is the repository at https://github.com/img2threejs/img2threejs, commit `3e7099e1b7fe93e187e06db4bdbe1e1906c21a28`: every tracked file, unmodified, except `.github/` (CI) and `CLAUDE.md`. The upstream `CLAUDE.md` holds contributor rules for developing img2threejs and would load as project instructions here, so it is left out. Its own installer links the skill into `~/.claude`, which does not persist in cloud sessions, so it is copied into the project instead. Licensed under the Apache License 2.0; the full text is in `img2threejs/LICENSE`.
+
+## microsoft/playwright-cli
+
+`playwright-cli` is the `skills/playwright-cli` folder of https://github.com/microsoft/playwright-cli at commit `db2a0fad3a768319a16e3a2bb8078cf62e690b07` (CLI version 0.1.23), unmodified; this is what `playwright-cli install --skills` installs. The skill drives the `playwright-cli` command, installed with `npm install -g @playwright/cli@0.1.23`. Copyright (c) Microsoft Corporation, licensed under the Apache License 2.0 (full text in the pbakaus/impeccable section above).
+
+## nextlevelbuilder/ui-ux-pro-max-skill
+
+`ui-ux-pro-max`, `design`, `design-system`, `brand`, `banner-design`, `slides` and `ui-styling` are the `.claude/skills/` folder of https://github.com/nextlevelbuilder/ui-ux-pro-max-skill at commit `dd9a1b4cf9f67ca2e326f646d93e101b2778db30` (plugin v2.15.0), unmodified; the repository's Claude Code plugin bundles exactly these. `ui-styling` carries its own Apache 2.0 `LICENSE.txt`, and its `canvas-fonts` each ship their SIL Open Font License file. The rest is MIT:
+
+```
+MIT License
+
+Copyright (c) 2024 Next Level Builder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
