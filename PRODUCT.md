@@ -48,10 +48,10 @@ The store's claim, as stated by the owner, combines four things: trade prices, a
 
 ## Capabilities and Constraints
 
-- Product catalogue with prices.
-- Every product links to an enquiry by WhatsApp or phone.
+- Product catalogue (temporary demo from the Fybros, GM and Philips ranges, in `src/data/catalog-demo.js`, until the client sends their list).
+- Customers add products to a list (cart) and send it on WhatsApp for availability and a price quote; they pay and collect in store.
 - Store visit details: address, map, opening hours.
-- No online payment, cart or checkout.
+- No online payment or checkout.
 - Languages: English and Tamil, both first-class.
 
 Open decisions, not yet provided:

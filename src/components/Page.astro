@@ -1,8 +1,10 @@
 ---
 import '../styles/global.css';
-import { shop, promises, categories, t, waLink } from '../data/site.js';
+import { shop, t, waLink } from '../data/site.js';
+import { categories, products, DEMO_CATALOG } from '../data/catalog-demo.js';
 import { logoSvg } from '../scripts/logo-geometry.js';
-import { symbols, icons } from '../scripts/symbols.js';
+import { icons } from '../scripts/symbols.js';
+import { art, diya } from '../scripts/illustrations.js';
 
 interface Props {
   lang: 'en' | 'ta';
@@ -13,13 +15,21 @@ const alt = lang === 'en' ? 'ta' : 'en';
 const site = 'https://sri-ambica-electricals.web.app';
 const path = lang === 'en' ? '/' : '/ta/';
 const mark = logoSvg({ title: shop.name.en });
-const hoursText = (h: number, m: number) => {
-  const am = h < 12;
-  const hh = ((h + 11) % 12) + 1;
-  return `${hh}${m ? ':' + String(m).padStart(2, '0') : ''} ${am ? 'AM' : 'PM'}`;
-};
-const closeAt = hoursText(...shop.hours.close as [number, number]);
-const openAt = hoursText(...shop.hours.open as [number, number]);
+const toneOf = Object.fromEntries(categories.map((c) => [c.id, c.tone]));
+const hoursText = (h: number, m: number) => `${((h + 11) % 12) + 1}${m ? ':' + String(m).padStart(2, '0') : ''} ${h < 12 ? 'AM' : 'PM'}`;
+const closeAt = hoursText(shop.hours.close[0], shop.hours.close[1]);
+const openAt = hoursText(shop.hours.open[0], shop.hours.open[1]);
+
+// Toran: a scalloped string of festive bulbs across the top of the hero.
+const bulbs = Array.from({ length: 25 }, (_, i) => {
+  const x = 10 + i * 49;
+  const y = 18 + Math.sin((i / 24) * Math.PI * 6) * 10 + 14;
+  return { x, y, tone: ['gold', 'marigold', 'rani', 'peacock'][i % 4], d: (i % 7) * 0.35 };
+});
+const wirePath = 'M0 20 ' + bulbs.map((b) => `Q${b.x - 24} ${b.y + 14} ${b.x} ${b.y - 6}`).join(' ') + ' L1240 20';
+
+// Hero shelf: six categories as lit tiles that jump into the catalogue.
+const heroCats = ['lighting', 'fans', 'switches', 'wires', 'appliances', 'switchgear'].map((id) => categories.find((c) => c.id === id));
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'ElectronicsStore',
@@ -39,7 +49,6 @@ const ld = {
   openingHours: 'Mo-Su 10:00-21:30',
   url: site + path,
 };
-const helpAfter = 'lighting';
 ---
 <!doctype html>
 <html lang={lang}>
@@ -48,7 +57,7 @@ const helpAfter = 'lighting';
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{L.title}</title>
     <meta name="description" content={L.description} />
-    <meta name="theme-color" content="#f4f7fb" />
+    <meta name="theme-color" content="#190b2c" />
     <link rel="canonical" href={site + path} />
     <link rel="alternate" hreflang="en" href={site + '/'} />
     <link rel="alternate" hreflang="ta" href={site + '/ta/'} />
@@ -69,244 +78,250 @@ const helpAfter = 'lighting';
       </a>
       <nav class="topnav" aria-label="Sections">
         <a href="#products">{L.nav.products}</a>
+        <a href="#how">{L.nav.how}</a>
         <a href="#offers">{L.nav.offers}</a>
         <a href="#visit">{L.nav.visit}</a>
       </nav>
       <a class="lang" href={L.other.href} hreflang={alt} lang={alt}>{L.other.label}</a>
-      <a class="btn btn-live btn-sm" href={waLink(L.waGeneral)} target="_blank" rel="noopener">
-        <span class="ic" set:html={icons.whatsapp} /><span class="hide-sm">WhatsApp</span>
-      </a>
+      <button class="cart-btn" type="button" data-open-cart aria-label={L.cart}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span class="cart-label">{L.cart}</span>
+        <span class="cart-count" data-cart-count>0</span>
+      </button>
     </header>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-mark">
-          <div class="mark-stage">
-            <div class="mark-flat" set:html={mark} />
-            <canvas id="logo3d" aria-hidden="true"></canvas>
+        <svg class="toran" viewBox="0 0 1240 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path class="toran-wire" d={wirePath} />
+          {bulbs.map((b) => (
+            <g class={`bulb tone-${b.tone}`} style={`--d:${b.d}s`}>
+              <circle cx={b.x} cy={b.y} r="9" class="halo" />
+              <circle cx={b.x} cy={b.y} r="4.5" class="glass" />
+            </g>
+          ))}
+        </svg>
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="festive-pill"><span class="pill-diya" set:html={diya} />{L.festive}</p>
+            <h1 id="hero-title" class="hero-title">
+              <span>{L.heroTitle[0]}</span>
+              <span class="glow">{L.heroTitle[1]}</span>
+            </h1>
+            <p class="hero-name">{shop.name.en} · <span lang="ta">{shop.name.ta}</span></p>
+            <p class="hero-lede">{L.heroLede}</p>
+            <div class="actions">
+              <a class="btn btn-gold" href="#products">{L.browse}<span class="ic" set:html={icons.arrow} /></a>
+              <a class="btn btn-ghost" href={waLink(L.waGeneral)} target="_blank" rel="noopener">
+                <span class="ic" set:html={icons.whatsapp} />{L.whatsapp}
+              </a>
+            </div>
+            <ul class="hero-meta" role="list">
+              <li class="meter" id="status" data-open={L.open(closeAt)} data-closed={L.closed(openAt)}>
+                <span class="meter-dot" aria-hidden="true"></span><span class="meter-text">{L.hoursLine}</span>
+              </li>
+              <li><span class="ic star" set:html={icons.star} /><b>{shop.rating}</b> {L.rating}</li>
+              <li><span class="ic" set:html={icons.pin} />Chittu Koil Street, Salem</li>
+            </ul>
           </div>
+          <nav class="hero-shelf" aria-label={L.catalogTitle}>
+            {heroCats.map((c, i) => (
+              <a class={`shelf-tile tone-${c.tone}`} href="#products" data-jump-cat={c.id} style={`--i:${i}`}>
+                <span class="shelf-art" set:html={art[c.kind]} />
+                <span class="shelf-label">{c.name[lang]}</span>
+              </a>
+            ))}
+          </nav>
         </div>
-        <div class="hero-copy">
-          <h1 id="hero-title" class="wordmark">
-            <span>Sri</span> <span>Ambica</span> <span class="live">Electricals</span>
-          </h1>
-          <p class="script-name" lang={lang === 'en' ? 'ta' : 'en'}>{lang === 'en' ? shop.name.ta : shop.name.en}</p>
-          <p class="promise">{L.promise}</p>
-          <div class="actions">
-            <a class="btn btn-live" href={waLink(L.waGeneral)} target="_blank" rel="noopener">
-              <span class="ic" set:html={icons.whatsapp} />{L.whatsapp}
-            </a>
-            <a class="btn btn-ink" href={`tel:${shop.phoneTel}`}>
-              <span class="ic" set:html={icons.phone} />{L.call}
-            </a>
-          </div>
-          <p class="meter" id="status" data-open={L.open(closeAt)} data-closed={L.closed(openAt)}>
-            <span class="meter-dot" aria-hidden="true"></span>
-            <span class="meter-text">{L.hoursLine}</span>
-          </p>
-          <address class="hero-address">
-            <span class="ic" set:html={icons.pin} />
-            <span>{shop.address[lang][0]}, {shop.address[lang][2]}, {shop.address[lang][3]}</span>
-          </address>
-          <p class="rating"><span class="ic star" set:html={icons.star} /><b>{shop.rating}</b> {L.rating}</p>
+        <div class="diyas" aria-hidden="true">
+          {Array.from({ length: 7 }, (_, i) => <span class="diya-wrap" style={`--d:${(i * 0.37) % 1.4}s`} set:html={diya} />)}
         </div>
       </section>
 
-      <nav class="board" id="products" aria-labelledby="board-title">
-        <div class="board-head">
-          <h2 id="board-title" class="board-title">{L.board}</h2>
-          <p class="board-hint">{L.boardHint}</p>
+      <section class="brands" aria-label={L.brandsLine}>
+        <p class="brands-label">{L.brandsLine}</p>
+        <ul class="brand-list" role="list">
+          {shop.brands.map((b) => <li class={`brand-name brand-${b.toLowerCase()}`}>{b}</li>)}
+        </ul>
+      </section>
+
+      <section class="catalog" id="products" aria-labelledby="catalog-title">
+        <div class="section-head">
+          <h2 id="catalog-title">{L.catalogTitle}</h2>
+          <p class="section-lede">{L.catalogLede}</p>
+          {DEMO_CATALOG && <p class="sample-note">{L.sampleNote}</p>}
         </div>
-        <ol class="db" role="list">
-          {categories.map((c, i) => (
-            <li>
-              <a class="mcb" href={`#${c.id}`} data-target={c.id}>
-                <span class="mcb-body" aria-hidden="true">
-                  <span class="mcb-way">{String(i + 1).padStart(2, '0')}</span>
-                  <span class="mcb-lever"></span>
-                </span>
-                <span class="mcb-label">{c.name[lang]}</span>
-              </a>
+
+        <div class="controls">
+          <label class="search">
+            <span class="sr-only">{L.search}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="search" id="search" placeholder={L.search} autocomplete="off" />
+          </label>
+          <div class="chips" role="group" aria-label={L.catalogTitle}>
+            <button type="button" class="chip" data-cat="all" aria-pressed="true">{L.all}</button>
+            {categories.map((c) => (
+              <button type="button" class={`chip tone-${c.tone}`} data-cat={c.id} aria-pressed="false">
+                <span class="chip-art" set:html={art[c.kind]} />{c.name[lang]}
+              </button>
+            ))}
+          </div>
+          <p class="count" id="count" aria-live="polite">{L.showing(products.length)}</p>
+        </div>
+
+        <ul class="grid" role="list" id="grid">
+          {products.map((p) => (
+            <li
+              class="card"
+              data-cat={p.cat}
+              data-search={`${p.brand} ${p.name.en} ${p.name.ta} ${p.spec.en} ${categories.find((c) => c.id === p.cat)?.name.en} ${categories.find((c) => c.id === p.cat)?.name.ta}`.toLowerCase()}
+            >
+              <div class={`card-art tone-${toneOf[p.cat]}`} set:html={art[p.kind]} />
+              <div class="card-body">
+                <p class="card-brand">{p.brand}</p>
+                <h3 class="card-name">{p.name[lang]}</h3>
+                <p class="card-spec">{p.spec[lang]}</p>
+                <form class="card-form" data-id={p.id}>
+                  {p.options && (
+                    <label class="opt">
+                      <span class="sr-only">{L.option}</span>
+                      <select name="opt">
+                        {p.options.map((o) => <option value={o}>{o}</option>)}
+                      </select>
+                    </label>
+                  )}
+                  <div class="qty">
+                    <button type="button" data-step="-1" aria-label={L.less}>−</button>
+                    <input type="number" name="qty" value="1" min="1" max="999" inputmode="numeric" aria-label={L.qty} />
+                    <button type="button" data-step="1" aria-label={L.more}>+</button>
+                  </div>
+                  <button type="submit" class="btn-add" data-added={L.added}>{L.add}</button>
+                </form>
+              </div>
             </li>
           ))}
-          <li>
-            <a class="mcb mcb-offer" href="#offers" data-target="offers">
-              <span class="mcb-body" aria-hidden="true">
-                <span class="mcb-way">%</span>
-                <span class="mcb-lever"></span>
-              </span>
-              <span class="mcb-label">{L.nav.offers}</span>
-            </a>
-          </li>
+        </ul>
+        <p class="empty" id="empty" hidden>
+          {L.none}
+          <a class="btn btn-ghost" href={waLink(L.waGeneral)} target="_blank" rel="noopener"><span class="ic" set:html={icons.whatsapp} />{L.whatsapp}</a>
+        </p>
+      </section>
+
+      <section class="how" id="how" aria-labelledby="how-title">
+        <h2 id="how-title">{L.howTitle}</h2>
+        <ol class="steps" role="list">
+          {L.steps.map(([title, body], i) => (
+            <li class="step">
+              <span class="step-diya" set:html={diya} />
+              <span class="step-no">{i + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </li>
+          ))}
         </ol>
-      </nav>
+      </section>
 
-      <div class="diagram">
-        <div class="bus" aria-hidden="true"><span class="bus-live"></span></div>
+      <section class="offers" id="offers" aria-labelledby="offers-title" aria-live="polite">
+        <div class="section-head">
+          <h2 id="offers-title">{L.offersTitle}</h2>
+        </div>
+        <ul class="offer-list" role="list" id="offer-list"></ul>
+        <div class="offer-empty" id="offer-empty">
+          <span class="offer-diyas" aria-hidden="true" set:html={diya + diya + diya} />
+          <p>{L.offersEmpty}</p>
+          <a class="btn btn-gold" href={waLink(L.waGeneral + ' ' + L.offersCta)} target="_blank" rel="noopener">
+            <span class="ic" set:html={icons.whatsapp} />{L.offersCta}
+          </a>
+        </div>
+      </section>
 
-        {categories.map((c) => (
-          <>
-            <section class="circuit" id={c.id} data-circuit aria-labelledby={`${c.id}-h`}>
-              <div class="circuit-side">
-                <span class="breaker" set:html={symbols.breaker} />
-                <span class="branch" aria-hidden="true"></span>
-                <span class="lamp" set:html={symbols.lamp} />
-                <div class="circuit-title">
-                  <span class="kind" set:html={symbols[c.symbol]} />
-                  <h2 id={`${c.id}-h`}>{c.name[lang]}</h2>
-                  <p class="alt-name" lang={alt}>{c.name[alt]}</p>
-                </div>
+      <section class="visit" id="visit" aria-labelledby="visit-title">
+        <div class="visit-grid">
+          <figure class="shop-photo">
+            <img src="/shop-counter.webp" width="848" height="478" loading="lazy" decoding="async" alt={L.photoAlt} />
+          </figure>
+          <div class="visit-info">
+            <h2 id="visit-title">{L.visitTitle}</h2>
+            <p class="visit-lede">{L.visitBody}</p>
+            <address>{shop.address[lang].map((line) => <span>{line}</span>)}</address>
+            <p class="visit-hours">{L.hoursLine}</p>
+            <dl class="contacts">
+              <div>
+                <dt>{L.phone}</dt>
+                <dd>{shop.phones.map((c, i) => (<><a href={`tel:${c.tel}`}>{c.display}</a>{i < shop.phones.length - 1 ? ' · ' : ''}</>))}</dd>
               </div>
-              <div class="circuit-body">
-                <p class="circuit-note">{c.note[lang]}</p>
-                <ul class="items" role="list">
-                  {c.items.map((it) => (
-                    <li class="item">
-                      <span class="item-name">{it[lang]}</span>
-                      <span class="leader" aria-hidden="true"></span>
-                      <span class="item-spec">{it.spec[lang]}</span>
-                      <a
-                        class="ask"
-                        href={waLink(`${L.waGreeting} ${it.en}${lang === 'ta' ? ' / ' + it.ta : ''}`)}
-                        target="_blank"
-                        rel="noopener"
-                        aria-label={L.askLabel(it[lang])}
-                      >
-                        {L.askPrice}<span class="ic" set:html={icons.arrow} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              <div>
+                <dt>{L.cell}</dt>
+                <dd><a href={`tel:${shop.mobile.tel}`}>{shop.mobile.display}</a> <span class="muted">· {L.askFor(shop.contactPerson)}</span></dd>
               </div>
-            </section>
-            {c.id === helpAfter && (
-              <aside class="circuit help" data-circuit aria-labelledby="help-h">
-                <div class="circuit-side">
-                  <span class="breaker" set:html={symbols.breaker} />
-                  <span class="branch" aria-hidden="true"></span>
-                  <span class="lamp" set:html={symbols.lamp} />
-                </div>
-                <div class="circuit-body help-body">
-                  <h2 id="help-h">{L.helpTitle}</h2>
-                  <p>{L.helpBody}</p>
-                  <a class="btn btn-live" href={waLink(L.waHelp)} target="_blank" rel="noopener">
-                    <span class="ic" set:html={icons.whatsapp} />{L.helpCta}
-                  </a>
-                </div>
-              </aside>
-            )}
-          </>
-        ))}
-
-        <section class="circuit offers" id="offers" data-circuit aria-labelledby="offers-h" aria-live="polite">
-          <div class="circuit-side">
-            <span class="breaker" set:html={symbols.breaker} />
-            <span class="branch" aria-hidden="true"></span>
-            <span class="lamp" set:html={symbols.lamp} />
-            <div class="circuit-title">
-              <span class="kind kind-pct" aria-hidden="true">%</span>
-              <h2 id="offers-h">{L.offersTitle}</h2>
-              <p class="alt-name" lang={alt}>{t[alt].offersTitle}</p>
+              <div><dt>{L.email}</dt><dd><a href={`mailto:${shop.email}`}>{shop.email}</a></dd></div>
+            </dl>
+            <div class="actions">
+              <a class="btn btn-gold" href={shop.directionsUrl} target="_blank" rel="noopener"><span class="ic" set:html={icons.pin} />{L.directions}</a>
+              <a class="btn btn-ghost" href={`tel:${shop.phoneTel}`}><span class="ic" set:html={icons.phone} />{L.call}</a>
             </div>
           </div>
-          <div class="circuit-body">
-            <ul class="offer-list" role="list" id="offer-list" data-until={lang}></ul>
-            <div class="offer-empty" id="offer-empty">
-              <p>{L.offersEmpty}</p>
-              <a class="btn btn-ink" href={waLink(L.waGeneral + ' ' + L.offersCta)} target="_blank" rel="noopener">
-                <span class="ic" set:html={icons.whatsapp} />{L.offersCta}
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section class="circuit plate-circuit" data-circuit aria-labelledby="plate-h">
-          <div class="circuit-side">
-            <span class="breaker" set:html={symbols.breaker} />
-            <span class="branch" aria-hidden="true"></span>
-            <span class="lamp" set:html={symbols.lamp} />
-          </div>
-          <div class="circuit-body">
-            <div class="plate">
-              <div class="plate-head">
-                <span class="plate-mark" set:html={mark} />
-                <div>
-                  <h2 id="plate-h">{L.plateTitle}</h2>
-                  <p class="plate-sub">{shop.tagline[lang]}</p>
-                </div>
-              </div>
-              <dl class="plate-rows">
-                {promises.map((p, i) => (
-                  <div class="plate-row">
-                    <dt>{String.fromCharCode(65 + i)}</dt>
-                    <dd>{p[lang]}</dd>
-                  </div>
-                ))}
-                <div class="plate-row">
-                  <dt>★</dt>
-                  <dd>{L.rating} <b>{shop.rating}</b> / 5</dd>
-                </div>
-              </dl>
-              <p class="plate-foot"><span>{L.gstin}</span> {shop.gstin}</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="circuit visit" id="visit" data-circuit aria-labelledby="visit-h">
-          <div class="circuit-side">
-            <span class="breaker earth" set:html={symbols.earth} />
-            <span class="branch" aria-hidden="true"></span>
-            <span class="lamp" set:html={symbols.lamp} />
-            <div class="circuit-title">
-              <span class="kind" set:html={symbols.supply} />
-              <h2 id="visit-h">{L.visitTitle}</h2>
-              <p class="alt-name" lang={alt}>{t[alt].visitTitle}</p>
-            </div>
-          </div>
-          <div class="circuit-body visit-body">
-            <figure class="shop-photo">
-              <img src="/shop-counter.webp" width="848" height="478" loading="lazy" decoding="async" alt={L.photoAlt} />
-            </figure>
-            <div class="visit-info">
-              <p class="visit-lede">{L.visitBody}</p>
-              <address>
-                {shop.address[lang].map((line) => <span>{line}</span>)}
-              </address>
-              <p class="visit-hours">{L.hoursLine}</p>
-              <dl class="contacts">
-                <div>
-                  <dt>{L.phone}</dt>
-                  <dd>{shop.phones.map((c, i) => (<><a href={`tel:${c.tel}`}>{c.display}</a>{i < shop.phones.length - 1 ? ' · ' : ''}</>))}</dd>
-                </div>
-                <div>
-                  <dt>{L.cell}</dt>
-                  <dd><a href={`tel:${shop.mobile.tel}`}>{shop.mobile.display}</a> <span class="muted">· {L.askFor(shop.contactPerson)}</span></dd>
-                </div>
-                <div><dt>{L.email}</dt><dd><a href={`mailto:${shop.email}`}>{shop.email}</a></dd></div>
-              </dl>
-              <div class="actions">
-                <a class="btn btn-live" href={shop.directionsUrl} target="_blank" rel="noopener">
-                  <span class="ic" set:html={icons.pin} />{L.directions}
-                </a>
-                <a class="btn btn-ink" href={`tel:${shop.phoneTel}`}>
-                  <span class="ic" set:html={icons.phone} />{L.call}
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+        </div>
+        <div class="why">
+          <h3>{L.whyTitle}</h3>
+          <ul role="list">{L.why.map((w) => <li>{w}</li>)}</ul>
+        </div>
+      </section>
     </main>
 
     <footer class="foot">
       <span class="foot-mark" set:html={mark} />
-      <p>{L.footer}</p>
+      <p>{L.footer}<br /><span class="muted">GSTIN {shop.gstin}</span></p>
       <p class="foot-links">
         <a href={shop.mapsUrl} target="_blank" rel="noopener">Google Maps</a>
         <a href={L.other.href} hreflang={alt} lang={alt}>{L.other.label}</a>
       </p>
     </footer>
 
+    <button class="cart-fab" type="button" data-open-cart aria-label={L.cart}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+      <span>{L.cart}</span><span class="cart-count" data-cart-count>0</span>
+    </button>
+
+    <dialog class="drawer" id="cart" aria-labelledby="cart-title">
+      <div class="drawer-inner">
+        <header class="drawer-head">
+          <h2 id="cart-title">{L.cart}</h2>
+          <p class="drawer-count" id="cart-summary"></p>
+          <button type="button" class="icon-btn" data-close-cart aria-label={L.close}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <ul class="lines" role="list" id="cart-lines"></ul>
+        <p class="cart-empty" id="cart-empty">{L.cartEmpty}</p>
+        <div class="drawer-foot" id="cart-foot">
+          <label class="field"><span>{L.yourName}</span><input type="text" id="cart-name" autocomplete="name" /></label>
+          <label class="field"><span>{L.note}</span><textarea id="cart-note" rows="2"></textarea></label>
+          <button type="button" class="btn btn-gold btn-block" id="cart-send"><span class="ic" set:html={icons.whatsapp} />{L.send}</button>
+          <p class="send-hint">{L.sendHint}</p>
+          <button type="button" class="link-btn" id="cart-clear">{L.clear}</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script
+      type="application/json"
+      id="i18n-data"
+      set:html={JSON.stringify({
+        lang,
+        whatsapp: shop.whatsapp,
+        remove: L.remove,
+        less: L.less,
+        more: L.more,
+        qty: L.qty,
+        waIntro: L.waIntro,
+        waName: L.waName,
+        waNote: L.waNote,
+        waOutro: L.waOutro,
+        items: [L.cartItems(1), L.cartItems(2)],
+        showing: L.showing(0),
+      })}
+    />
     <script>
       import '../scripts/page.js';
     </script>

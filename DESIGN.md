@@ -1,113 +1,104 @@
 ---
-name: Sri Ambica Electricals: single-line diagram
+name: Sri Ambica Electricals: Diwali catalogue
 colors:
-  sheet: "#f4f7fb"
-  paper: "#ffffff"
-  graphite: "#141c27"
-  graphite-soft: "#445063"
-  graphite-faint: "#8b97a8"
-  rule: "#cdd6e1"
-  live-blue: "#1a63cf"
-  live-blue-deep: "#124ea6"
-  live-blue-tint: "#e3edfb"
-  lamp-yellow: "#ffc531"
+  night: "#190b2c"
+  night-2: "#221038"
+  night-3: "#2e1749"
+  night-4: "#3b1f5c"
+  cream: "#fff4e2"
+  cream-2: "#e6d3c0"
+  cream-3: "#b9a6c4"
+  gold: "#ffc23d"
+  ink-on-gold: "#2a1204"
+  marigold: "#ff8a1f"
+  rani: "#c92a67"
+  peacock: "#18a594"
+  indigo: "#5b63f0"
+  chilli: "#ee5232"
+  lagoon: "#129fc6"
+  violet: "#9d63e8"
+  logo-blue: "#3d86ff"
 typography:
   display:
-    fontFamily: "Saira Semi Condensed"
+    fontFamily: "Baloo Thambi 2"
     fontWeight: 800
-    textTransform: uppercase
-  display-hero:
-    fontFamily: "Saira Semi Condensed"
-    fontSize: "clamp(2.7rem, 5.6vw, 5rem)"
+  hero:
+    fontFamily: "Baloo Thambi 2"
+    fontSize: "clamp(2.6rem, 6vw, 5.2rem)"
     fontWeight: 800
-    lineHeight: 0.92
+    lineHeight: 0.98
   heading:
-    fontFamily: "Saira Semi Condensed"
-    fontSize: "clamp(1.55rem, 2.6vw, 2.3rem)"
+    fontFamily: "Baloo Thambi 2"
+    fontSize: "clamp(2rem, 4vw, 3rem)"
     fontWeight: 800
-  label:
-    fontFamily: "Saira Semi Condensed"
-    fontSize: "0.95rem"
-    fontWeight: 700
-    letterSpacing: "0.05em"
   body:
     fontFamily: "Hind Madurai"
     fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.6
 rounded:
-  pipe: "999px"
-  panel: "12px"
-  plate: "14px"
-  module: "8px"
+  pill: "999px"
+  control: "12px"
+  card: "20px"
+  panel: "24px"
 spacing:
   gutter: "clamp(16px, 4vw, 48px)"
-  bus-width: "72px"
-  circuit-gap: "clamp(48px, 7vw, 88px)"
-  wire: "8px"
+  max-width: "1240px"
 components:
   button-primary:
-    backgroundColor: "{colors.live-blue}"
-    textColor: "#ffffff"
-    rounded: "{rounded.pipe}"
-    height: "52px"
-  button-primary-hover:
-    backgroundColor: "{colors.live-blue-deep}"
-  button-secondary:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.graphite}"
-    rounded: "{rounded.pipe}"
-    height: "52px"
-  help-panel:
-    backgroundColor: "{colors.live-blue}"
-    textColor: "#ffffff"
-    rounded: "18px"
-  plate:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.graphite}"
-    rounded: "{rounded.plate}"
+    backgroundColor: "{colors.gold}"
+    textColor: "{colors.ink-on-gold}"
+    rounded: "{rounded.pill}"
+    height: "50px"
+  button-ghost:
+    textColor: "{colors.cream}"
+    rounded: "{rounded.pill}"
+    height: "50px"
+  product-card:
+    backgroundColor: "{colors.night-3}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.card}"
+  how-band:
+    backgroundColor: "{colors.marigold}"
+    textColor: "{colors.ink-on-gold}"
 ---
 
 # Sri Ambica Electricals: design system
 
 ## Overview
 
-The site is drawn as an electrician's single-line diagram on a cool white sheet. The shop's own mark, a blue pipe drawn as an "S" inside a house, sits at the top as a real WebGL model. Its dripping tap feeds one blue conductor, the busbar, that runs down the page. Every product family is a circuit hanging off that busbar through a breaker symbol, with a lamp that lights while the circuit is in view. The category navigation is a distribution board of MCB toggles. The world refuses the electrical-shop default of a banner carousel above a grid of product cards.
+A Diwali night: the page is a deep plum sky lit by the shop's own wares. A toran of twinkling bulbs hangs across the top, a rangoli turns slowly behind the shop's 3D pipe logo, and a row of flickering diyas closes the hero. Below it the catalogue is the product: colour-coded tiles per category, an "Add to list" on every item, and a cart that sends the list to the shop on WhatsApp for availability and a price quote; the customer pays and collects in store. The festive layer (toran, rangoli, diyas, "Happy Diwali") is seasonal and can be removed after the festival without touching the catalogue.
 
 ## Colors
 
-Two inks on one sheet. Graphite draws every rule, symbol and word; the logo's PVC blue (`live-blue`) is the only live colour: the busbar, the energised branch, primary actions, links and the help panel. `lamp-yellow` appears only as a lit lamp's glass and the open-now dot. There are no gradients, no tinted cards and no other hues. Secondary text uses `graphite-soft`, never a light grey on white.
+Plum night surfaces (`night` to `night-4`) carry the page; cream text on them. Diya `gold` is the single action colour (primary buttons, active chip, prices of attention). Each category owns one festive tone (marigold, gold, peacock, rani, indigo, chilli, lagoon, violet) used only on its product tiles, chips and cart icons. The "How it works" band is the one drenched marigold surface. The logo keeps its own blue.
 
 ## Typography
 
-Saira Semi Condensed, squared and heavy, echoes the logo's wordmark and sets the wordmark, circuit names, the board and printed readings (uppercase, tracked labels). Hind Madurai, designed for Tamil, sets all body copy in both languages, and Tamil runs fall back to it inside display settings. Product rows read like a rate card: bold name, dotted leader, spec, then the question.
+Baloo Thambi 2 (Tamil and Latin, rounded and festive) for every heading and the wordmark; Hind Madurai for body text in both languages. Product brand names are small tracked capitals in gold.
 
 ## Layout
 
-One grid runs the whole page: a side column for circuit names, a 72px bus column, and the content column. The hero, board and diagram share it so the busbar is one straight line from the logo's drop to the earth symbol at the visit circuit. On phones the side column collapses to zero, the bus moves to the left edge, and each circuit's name sits beside its breaker. Product rows stack below 520px.
+Max width 1240px with fluid gutters. Hero: logo left, copy right; stacks on phones. Catalogue: sticky search and category chips, then an auto-fill grid (4 columns desktop, 2 on phones, 1 below 380px). Cart: right-side drawer on desktop, bottom sheet on phones, opened from the header button or the floating "My list" button on phones.
 
 ## Elevation & Depth
 
-Flat by default. Depth belongs to physical objects only: the 3D logo, the MCB levers and the riveted plate. Shadows appear only on primary-button hover, offset and soft.
+Cards lift 3px on hover with a dark offset shadow. Light comes from the scene (bulbs, diyas, the glow behind the logo), never from coloured glows on text or buttons.
 
 ## Shapes
 
-Pipe-ended (fully rounded) buttons, like the logo's runs. Enclosures (the board, offers, plate, photo frame) use 2px graphite borders with 12–14px corners. Symbols use one 2px stroke on a 48 grid.
+Pill buttons, chips and steppers; 20px cards; 24px panels; product art drawn in one 3px line on a 64 grid.
 
 ## Components
 
-- **Busbar**: dashed graphite rail with an 8px live-blue conductor that fills with scroll progress; fully live under reduced motion.
-- **Circuit**: breaker on the bus, a branch to a lamp, name and the other language's name on the left, note and rate-card rows on the right. Live state: blue breaker and branch, yellow lamp with a halo. Text never dims.
-- **MCB toggle**: module body, lever down (grey) when off, up (blue) when its circuit is live; doubles as the in-page navigation.
-- **Meter**: open/closed reading printed in caps inside a bordered strip; computed in Asia/Kolkata.
-- **Help panel**: the single drenched live-blue block, inviting a WhatsApp photo.
-- **Offers**: rows loaded from Firestore; dashed empty state with a WhatsApp action when none are active.
-- **Plate**: riveted rating plate listing the shop's claims, rating and GSTIN.
+- **Product card**: category-toned art tile, brand, name, spec, optional size/rating select, quantity stepper, "Add to list" (turns green "Added" briefly).
+- **Cart drawer**: lines with art, option, stepper and Remove; optional name and note; "Send list on WhatsApp" builds a numbered list with quantities; "Clear list". Saved on the device (localStorage).
+- **Offers**: live from Firestore; with none, a Diwali greeting card with a WhatsApp action.
+- **Sample note**: shown while `DEMO_CATALOG` is true in `src/data/catalog-demo.js`.
 
 ## Do's and Don'ts
 
-- Do keep blue for things that are live or actionable; never decorate with it.
-- Do name every product's question in WhatsApp; never show an invented price, stock count or offer.
-- Do keep both languages first-class: every label exists in English and Tamil.
-- Don't add cards, gradients, glass or a second accent colour.
-- Don't replace the 3D mark with a picture of it; the flat SVG is only the fallback.
+- Do keep gold for actions only; category tones stay on their own products.
+- Do keep every product one tap from the list, and never show invented prices.
+- Do remove the Diwali layer after the festival rather than letting it age.
+- Don't add glows to text or buttons; don't put body text on category tones.
