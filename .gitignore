@@ -32,3 +32,6 @@
 
 # playwright-cli working output (snapshots, screenshots)
 .playwright-cli/
+node_modules/
+dist/
+.astro/

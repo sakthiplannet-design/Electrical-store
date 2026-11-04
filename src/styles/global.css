@@ -1,0 +1,1102 @@
+@import '@fontsource/saira-semi-condensed/600.css';
+@import '@fontsource/saira-semi-condensed/700.css';
+@import '@fontsource/saira-semi-condensed/800.css';
+@import '@fontsource/hind-madurai/400.css';
+@import '@fontsource/hind-madurai/500.css';
+@import '@fontsource/hind-madurai/600.css';
+@import '@fontsource/hind-madurai/700.css';
+
+:root {
+  /* Drawing sheet, graphite ink, one live conductor (the logo's PVC blue), lamp glass. */
+  --sheet: #f4f7fb;
+  --paper: #ffffff;
+  --ink: #141c27;
+  --ink-2: #445063;
+  --ink-3: #8b97a8;
+  --rule: #cdd6e1;
+  --live: #1a63cf;
+  --live-deep: #124ea6;
+  --live-tint: #e3edfb;
+  --lamp: #ffc531;
+  --lamp-halo: rgb(255 197 49 / 0.32);
+
+  --display: 'Saira Semi Condensed', 'Hind Madurai', system-ui, sans-serif;
+  --body: 'Hind Madurai', system-ui, sans-serif;
+
+  --pad: clamp(16px, 4vw, 48px);
+  --side: clamp(200px, 26vw, 330px);
+  --bus-w: 72px;
+  --bus-x: calc(var(--side) + var(--bus-w) / 2);
+  --mark: clamp(300px, 40vw, 540px);
+  --wire: 8px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+  accent-color: var(--live);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+  scrollbar-color: var(--ink-3) var(--sheet);
+}
+
+body {
+  margin: 0;
+  background: var(--sheet);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  caret-color: var(--live);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--live);
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--live);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+address {
+  font-style: normal;
+}
+
+.ic {
+  display: inline-flex;
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+.ic svg {
+  width: 100%;
+  height: 100%;
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 50;
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+}
+.skip:focus {
+  top: 12px;
+}
+
+.muted {
+  color: var(--ink-2);
+}
+
+/* Buttons are pipe-ended, like the logo's runs. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px 0 18px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font: 600 1.0625rem/1.2 var(--body);
+  text-decoration: none;
+  max-width: 100%;
+  padding-block: 8px;
+  transition:
+    background-color 160ms var(--ease-out),
+    color 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+.btn .ic {
+  width: 22px;
+  height: 22px;
+}
+.btn-live {
+  background: var(--live);
+  color: #fff;
+}
+.btn-live:hover {
+  background: var(--live-deep);
+  box-shadow: 0 6px 16px -6px rgb(18 78 166 / 0.55);
+  transform: translateY(-1px);
+}
+.btn-ink {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--paper);
+}
+.btn-ink:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+.btn-sm {
+  min-height: 42px;
+  padding: 0 16px 0 13px;
+  font-size: 0.95rem;
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2.4vw, 28px);
+  padding: 10px var(--pad);
+  background: rgb(244 247 251 / 0.94);
+  border-bottom: 1px solid var(--rule);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-right: auto;
+}
+.brand-mark {
+  width: 34px;
+  height: 38px;
+  color: var(--live);
+}
+.brand-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.brand-word {
+  font: 600 1.15rem/1 var(--display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.brand-word b {
+  color: var(--live);
+  font-weight: 800;
+}
+.topnav {
+  display: flex;
+  gap: clamp(14px, 2vw, 26px);
+}
+.topnav a,
+.lang {
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+.topnav a:hover,
+.lang:hover {
+  border-bottom-color: var(--live);
+}
+.lang {
+  font-family: var(--body);
+}
+
+/* The sheet: hero, board and diagram share one grid so the busbar runs straight. */
+main {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--pad) 24px;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--side) var(--bus-w) minmax(0, 1fr);
+  align-items: center;
+  min-height: min(calc(100svh - 64px), 780px);
+  padding: clamp(24px, 4vw, 48px) 0 0;
+}
+.hero-mark {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  position: relative;
+  height: var(--mark);
+}
+.mark-stage {
+  position: absolute;
+  top: 0;
+  left: calc(var(--bus-x) - var(--mark) / 2);
+  width: var(--mark);
+  height: var(--mark);
+}
+.mark-stage canvas,
+.mark-flat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.mark-flat {
+  display: grid;
+  place-items: center;
+  color: var(--live);
+  transition: opacity 400ms var(--ease-out);
+}
+.mark-flat svg {
+  width: 62%;
+  height: auto;
+}
+.mark-stage.has-3d .mark-flat {
+  opacity: 0;
+}
+.mark-stage canvas {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+}
+.mark-stage.has-3d canvas {
+  opacity: 1;
+}
+
+.hero-copy {
+  grid-column: 3;
+  grid-row: 1;
+  padding-left: calc(var(--mark) / 2 - var(--bus-w) / 2 + 8px);
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+.wordmark {
+  font-weight: 800;
+  font-size: clamp(2.7rem, 5.6vw, 5rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.wordmark span {
+  display: block;
+}
+.wordmark .live {
+  color: var(--live);
+}
+.script-name {
+  font: 600 1.2rem/1.3 var(--body);
+  color: var(--ink-2);
+  margin-top: -4px;
+}
+.promise {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.45;
+  max-width: 34ch;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 0.98rem/1.2 var(--display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 14px 7px;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+.meter-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  flex: none;
+}
+.meter.is-open .meter-dot {
+  background: var(--lamp);
+  box-shadow: 0 0 0 4px var(--lamp-halo);
+}
+.hero-address,
+.rating {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--ink-2);
+  max-width: 44ch;
+}
+.hero-address .ic,
+.rating .ic {
+  margin-top: 0.15em;
+  color: var(--ink);
+}
+.rating b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.rating .star {
+  color: var(--live);
+}
+
+/* The busbar: graphite rail with the live conductor filling as you read. */
+.bus {
+  position: absolute;
+  left: calc(var(--pad) + var(--bus-x) - 1px);
+  top: var(--bus-top, 560px);
+  bottom: 120px;
+  width: 0;
+  border-left: 2px dashed var(--ink-3);
+  z-index: 0;
+}
+.bus-live {
+  position: absolute;
+  left: calc(-1px - var(--wire) / 2);
+  top: 0;
+  width: var(--wire);
+  height: 100%;
+  border-radius: var(--wire);
+  background: var(--live);
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+}
+
+/* Distribution board: one MCB per circuit. */
+.board {
+  position: relative;
+  z-index: 2;
+  margin: clamp(24px, 4vw, 40px) 0 0;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 18px clamp(14px, 2.4vw, 28px) 20px;
+}
+.board::before {
+  /* where the busbar enters the enclosure */
+  content: '';
+  position: absolute;
+  left: calc(var(--bus-x) - var(--wire) / 2 - 2px);
+  top: -2px;
+  width: var(--wire);
+  height: 14px;
+  background: var(--live);
+  border-radius: 0 0 4px 4px;
+}
+.board-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-bottom: 14px;
+}
+.board-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.board-hint {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+.db {
+  list-style: none;
+  margin: 0;
+  padding: 2px 2px 6px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(96px, 1fr));
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.db li {
+  scroll-snap-align: start;
+}
+.mcb {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 10px 6px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 160ms var(--ease-out);
+}
+.mcb:hover {
+  background: var(--live-tint);
+}
+.mcb-body {
+  position: relative;
+  width: 54px;
+  height: 86px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--sheet);
+}
+.mcb-way {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: 700 0.78rem/1 var(--display);
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+.mcb-lever {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 20px;
+  height: 46px;
+  margin-left: -10px;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+  background: var(--paper);
+}
+.mcb-lever::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  height: 18px;
+  bottom: 2px;
+  border-radius: 3px;
+  background: var(--ink-3);
+  transition:
+    transform 200ms var(--ease-out),
+    background-color 200ms var(--ease-out);
+}
+.mcb.is-on .mcb-lever::after {
+  transform: translateY(-20px);
+  background: var(--live);
+}
+.mcb-label {
+  font: 600 0.92rem/1.25 var(--body);
+  text-align: center;
+  max-width: 13ch;
+}
+.mcb.is-on .mcb-label {
+  color: var(--live-deep);
+}
+
+/* Circuits. The busbar is positioned against <main>, so the diagram stays static. */
+.diagram {
+  padding-top: 24px;
+}
+.circuit-side {
+  display: contents;
+}
+.circuit {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: var(--side) var(--bus-w) minmax(0, 1fr);
+  padding: clamp(48px, 7vw, 88px) 0 0;
+  --sym: var(--ink-3);
+}
+.circuit.is-live {
+  --sym: var(--ink);
+}
+.breaker {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  width: 44px;
+  height: 44px;
+  margin-top: -6px;
+  background: var(--sheet);
+  color: var(--sym);
+  border-radius: 6px;
+  transition: color 300ms var(--ease-out);
+}
+.circuit.is-live .breaker {
+  color: var(--live);
+}
+.breaker svg,
+.lamp svg,
+.kind svg {
+  width: 100%;
+  height: 100%;
+}
+.branch {
+  position: absolute;
+  top: calc(clamp(48px, 7vw, 88px) + 15px);
+  left: calc(var(--bus-x) + 22px);
+  width: calc(var(--bus-w) / 2 - 4px);
+  height: 2px;
+  background: var(--sym);
+  transform-origin: left;
+  transition: background-color 300ms var(--ease-out);
+}
+.circuit.is-live .branch {
+  height: 4px;
+  margin-top: -1px;
+  background: var(--live);
+}
+.lamp {
+  position: absolute;
+  top: calc(clamp(48px, 7vw, 88px) - 3px);
+  left: calc(var(--side) + var(--bus-w) + 14px);
+  width: 40px;
+  height: 40px;
+  color: var(--sym);
+  border-radius: 50%;
+  transition:
+    color 300ms var(--ease-out),
+    box-shadow 400ms var(--ease-out);
+}
+.circuit.is-live .lamp {
+  --lamp-fill: var(--lamp);
+  color: var(--ink);
+  box-shadow: 0 0 0 8px var(--lamp-halo);
+}
+.circuit-title {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: right;
+  padding-right: 18px;
+  display: grid;
+  justify-items: end;
+  align-content: start;
+  gap: 6px;
+}
+.kind {
+  width: 40px;
+  height: 40px;
+  color: var(--live);
+  margin-bottom: 4px;
+}
+.kind-pct {
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--live);
+  border-radius: 50%;
+  font: 800 1.2rem/1 var(--display);
+}
+.circuit-title h2 {
+  font-size: clamp(1.55rem, 2.6vw, 2.3rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+.alt-name {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.circuit-body {
+  grid-column: 3;
+  grid-row: 1;
+  padding-left: 76px;
+  min-width: 0;
+}
+.circuit-note {
+  font-size: 1.1rem;
+  max-width: 60ch;
+  margin: 6px 0 18px;
+}
+
+/* Items read like a rate card: name, leader, spec, the question. */
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--ink);
+}
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(24px, 1fr) auto auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 0 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.item-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.leader {
+  align-self: center;
+  height: 0;
+  border-bottom: 2px dotted var(--ink-3);
+  transform: translateY(5px);
+}
+.item-spec {
+  color: var(--ink-2);
+  text-align: right;
+}
+.ask {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 4px 0 14px;
+  border-left: 1px solid var(--rule);
+  color: var(--live);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ask .ic {
+  width: 18px;
+  height: 18px;
+  transition: transform 160ms var(--ease-out);
+}
+.ask:hover {
+  color: var(--live-deep);
+}
+.ask:hover .ic {
+  transform: translateX(3px);
+}
+
+/* The help circuit is the one drenched panel: the live colour owns it. */
+.help .circuit-body {
+  grid-column: 1 / -1;
+  padding: clamp(24px, 4vw, 44px);
+}
+.help .branch {
+  width: calc(var(--bus-w) / 2 + 30px);
+}
+.help-body {
+  margin-left: calc(var(--side) + var(--bus-w) + 70px);
+  background: var(--live);
+  color: #fff;
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 44px);
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+.help-body h2 {
+  font-size: clamp(1.8rem, 3.4vw, 2.9rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.help-body p {
+  font-size: 1.15rem;
+  max-width: 52ch;
+  color: #eaf2ff;
+}
+.help-body .btn-live {
+  background: #fff;
+  color: var(--live-deep);
+}
+.help-body .btn-live:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* Offers */
+.offer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.offer-list:empty {
+  display: none;
+}
+.offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 18px;
+  align-items: start;
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+.offer h3 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.offer p {
+  grid-column: 1;
+  color: var(--ink-2);
+}
+.offer .until {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  font: 700 0.95rem/1 var(--display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--live-tint);
+  color: var(--live-deep);
+  white-space: nowrap;
+}
+.offer-empty {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  padding: 22px 22px 24px;
+  border: 2px dashed var(--ink-3);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.offer-empty p {
+  font-size: 1.1rem;
+  max-width: 54ch;
+}
+.has-offers .offer-empty {
+  display: none;
+}
+
+/* Rating plate, riveted like the one on every DB. */
+.plate {
+  position: relative;
+  max-width: 640px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 26px 30px 22px;
+}
+.plate::before,
+.plate::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-3);
+}
+.plate::before {
+  left: 12px;
+}
+.plate::after {
+  right: 12px;
+}
+.plate-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--ink);
+}
+.plate-mark {
+  width: 46px;
+  height: 52px;
+  color: var(--live);
+  flex: none;
+}
+.plate-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.plate-head h2 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.plate-sub {
+  color: var(--ink-2);
+  font-style: italic;
+}
+.plate-rows {
+  margin: 0;
+}
+.plate-row {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.plate-row dt {
+  font: 800 1rem/1 var(--display);
+  color: var(--live);
+  text-align: center;
+}
+.plate-row dd {
+  margin: 0;
+  font-weight: 500;
+}
+.plate-foot {
+  margin-top: 14px;
+  font: 600 0.9rem/1 var(--display);
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.plate-foot span {
+  color: var(--ink);
+}
+
+/* Visit */
+.earth {
+  height: 46px;
+}
+.visit-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: start;
+}
+.shop-photo {
+  margin: 0;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+  aspect-ratio: 848 / 478;
+}
+.shop-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.visit-info {
+  display: grid;
+  gap: 16px;
+}
+.visit-lede {
+  font-size: 1.15rem;
+}
+.visit-info address {
+  display: grid;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.45;
+}
+.visit-hours {
+  color: var(--ink-2);
+}
+.contacts {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.contacts div {
+  display: grid;
+  gap: 0;
+}
+.contacts dt {
+  font: 700 0.9rem/1.6 var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.contacts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.contacts a {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Footer as the drawing's title block */
+.foot {
+  max-width: 1280px;
+  margin: 24px auto 0;
+  padding: 22px var(--pad) 40px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  border-top: 2px solid var(--ink);
+  color: var(--ink-2);
+}
+.foot-mark {
+  width: 30px;
+  height: 34px;
+  color: var(--live);
+}
+.foot-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.foot-links {
+  display: flex;
+  gap: 18px;
+  font-weight: 600;
+}
+
+/* Tablet */
+@media (max-width: 1080px) {
+  :root {
+    --side: clamp(180px, 24vw, 260px);
+  }
+  .item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'name ask' 'spec ask';
+    gap: 2px 14px;
+  }
+  .item-name {
+    grid-area: name;
+  }
+  .item-spec {
+    grid-area: spec;
+    text-align: left;
+  }
+  .leader {
+    display: none;
+  }
+  .ask {
+    grid-area: ask;
+    align-self: center;
+  }
+  .visit-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phone: the busbar moves to the left edge and every circuit hangs to its right. */
+@media (max-width: 820px) {
+  :root {
+    --side: 0px;
+    --bus-w: 40px;
+    --mark: min(84vw, 380px);
+  }
+  .topnav,
+  .hide-sm {
+    display: none;
+  }
+  .brand-word {
+    font-size: 1rem;
+  }
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding-top: 8px;
+    gap: 8px;
+  }
+  .hero-mark,
+  .hero-copy {
+    grid-column: 1;
+  }
+  .hero-mark {
+    grid-row: 1;
+  }
+  .mark-stage {
+    left: calc(50% - var(--mark) / 2);
+  }
+  .hero-copy {
+    grid-row: 2;
+    padding-left: 0;
+  }
+  .wordmark {
+    font-size: clamp(2.5rem, 12.5vw, 3.6rem);
+  }
+  .board::before {
+    left: calc(var(--bus-x) - var(--wire) / 2 - 2px + 0px);
+  }
+  .db {
+    grid-template-columns: repeat(8, 104px);
+  }
+  .circuit {
+    grid-template-columns: 0 var(--bus-w) minmax(0, 1fr);
+  }
+  .circuit-title {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: left;
+    justify-items: start;
+    padding: 0 0 0 58px;
+  }
+  .kind {
+    display: none;
+  }
+  .circuit-body {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    padding: 14px 0 0 calc(var(--bus-w) + 4px);
+  }
+  .lamp {
+    left: calc(var(--bus-w) + 8px);
+    width: 36px;
+    height: 36px;
+  }
+  .branch {
+    left: calc(var(--bus-x) + 20px);
+    width: 6px;
+  }
+  .help-body {
+    margin-left: calc(var(--bus-w) + 4px);
+  }
+  .help .circuit-body {
+    grid-row: 1;
+    margin-top: 52px;
+  }
+  .offer {
+    grid-template-columns: 1fr;
+  }
+  .offer .until {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+  }
+  .plate {
+    padding: 22px 18px 18px;
+  }
+  .foot {
+    grid-template-columns: auto 1fr;
+  }
+  .foot-links {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Narrow phones: each product row stacks so long names (and Tamil) get the full width. */
+@media (max-width: 520px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'name' 'spec' 'ask';
+    gap: 2px;
+    padding: 14px 0 8px;
+  }
+  .ask {
+    justify-self: start;
+    border-left: 0;
+    padding-left: 0;
+    min-height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+  .bus-live {
+    transform: none;
+  }
+}

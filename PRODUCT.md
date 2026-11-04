@@ -10,6 +10,21 @@ web
 
 Delegated: Astro with static output. The catalogue-and-enquiry model needs no server, cart or payments, so a static site is enough. Astro builds every product page from one data file, has built-in i18n routing for the second language, ships little JavaScript so pages load fast on phones, and deploys free to any static host. Deploy target not chosen yet.
 
+## Client
+
+Sri Ambica Marketing, trading as Sri Ambica Electricals (ஶ்ரீ அம்பிகா மார்கெட்டிங், ஶ்ரீ அம்பிகா எலக்ட்ரிக்கல்ஸ்). Electrical products wholesaler, authorised distributor for Salem and Namakkal districts (the card shows the GM "Switch to a better world" mark beside this line). Tagline on their card: "Good ideas for a better living".
+
+- Address: Siva Complex (Old Hema Lodge), near Kirthika Pipes, 20, Chittu Koil Street, Salem 636 001, Tamil Nadu. Plus code M526+M8. Map pin 11.6516393, 78.1608556.
+- Sri Ambica Electricals' own card (Fybros co-branded): contact Arun Jain, mobile 97895 20634; phone 0427 226 5201; No. 20/72, Siva Complex, Chittu Koil Street; GSTIN 33AFAPP3283P1Z3. The site uses these details, and WhatsApp goes to 97895 20634 (not confirmed as a WhatsApp number).
+- Sri Ambica Marketing's card (sister concern, same premises): phone 0427 497 1954 (also on Google), cell 73058 39396 and 86670 28928.
+- Email ambicamkt.salem@gmail.com and GSTIN 33ACXPL5787C1Z4 belong to Sri Ambica Marketing.
+- Brands on record: GM (authorised distributor, Marketing card), Fybros (Electricals card), Philips (shop video).
+- Hours on Google: Wednesday 10 AM to 9:30 PM (other days not shown; assume the same and say "call before visiting on Sundays").
+- Google rating 4.8 (review count not visible).
+- Logo (Sri Ambica Electricals, the brand this site uses): a blue pipe drawn as an "S" inside a house outline, a tap on the middle run and a dripping tap on the bottom run; wordmark SRI / AMBICA / ELECTRICALS in a squared bold sans, blue. The shop sign sets "Sri Ambica" in red and "Electricals" in blue beside the icon and a yellow bulb. Source: the shop's promo video (user-supplied, 2026-11-04). The card's "SAM" monogram belongs to the Sri Ambica Marketing trading name.
+- Range seen in the shop video: Philips home appliances (steam irons, mixer grinders, kettles) and PVC pipes, besides the card's switches, wires & cables, LED, fans and MCBs. The video also shows a Philips gift offer; the owner asked that it NOT appear on the site.
+- Sources: Google Maps listing (kgmid /g/11fd3gvzw2), the business card photo on it, and the shop's promo video, all 2026-11-04. Use the video for design reference and the logo only.
+
 ## Users
 
 Two audiences, equally important:
@@ -37,20 +52,18 @@ The store's claim, as stated by the owner, combines four things: trade prices, a
 - Every product links to an enquiry by WhatsApp or phone.
 - Store visit details: address, map, opening hours.
 - No online payment, cart or checkout.
-- Languages: English plus one local language, both first-class.
+- Languages: English and Tamil, both first-class.
 
 Open decisions, not yet provided:
 
-- Store name, logo and any existing brand colours.
-- Address, phone and WhatsApp numbers, opening hours.
-- Which local language.
-- Brands stocked, product list and prices.
+- Which number takes WhatsApp; full weekly hours.
+- Brands stocked beyond the distributorship, the full product list, and prices.
 - Delivery area and terms.
 - Whether trade or bulk prices are shown publicly or given on request.
 
 ## Evidence on Hand
 
-None yet. The repository contains no product data, prices, brand list, photographs, logo, reviews or store details. Future work must not invent prices, brand partnerships, stock levels, delivery times, testimonials or customer numbers. Use clearly marked placeholders until the owner supplies real content.
+Store details, product categories (switches, wires & cables, LED, fans, MCBs, home appliances, pipes), the distributorship, the logo and the 4.8 Google rating come from the Google listing, business card and promo video (see Client). A still of the shop counter from the video may be used as real shop imagery. There are no prices, SKU list, product photos, reviews text or offers. Future work must not invent prices, brand partnerships, stock levels, delivery times, testimonials or customer numbers. Use clearly marked placeholders until the owner supplies real content.
 
 ## Product Principles
 

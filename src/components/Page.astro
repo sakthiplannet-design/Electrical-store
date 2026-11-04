@@ -1,0 +1,314 @@
+---
+import '../styles/global.css';
+import { shop, promises, categories, t, waLink } from '../data/site.js';
+import { logoSvg } from '../scripts/logo-geometry.js';
+import { symbols, icons } from '../scripts/symbols.js';
+
+interface Props {
+  lang: 'en' | 'ta';
+}
+const { lang } = Astro.props;
+const L = t[lang];
+const alt = lang === 'en' ? 'ta' : 'en';
+const site = 'https://sri-ambica-electricals.web.app';
+const path = lang === 'en' ? '/' : '/ta/';
+const mark = logoSvg({ title: shop.name.en });
+const hoursText = (h: number, m: number) => {
+  const am = h < 12;
+  const hh = ((h + 11) % 12) + 1;
+  return `${hh}${m ? ':' + String(m).padStart(2, '0') : ''} ${am ? 'AM' : 'PM'}`;
+};
+const closeAt = hoursText(...shop.hours.close as [number, number]);
+const openAt = hoursText(...shop.hours.open as [number, number]);
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'ElectronicsStore',
+  name: shop.name.en,
+  alternateName: [shop.legal.en, shop.name.ta],
+  telephone: shop.phoneTel,
+  email: shop.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'No. 20/72, Siva Complex, Chittu Koil Street',
+    addressLocality: 'Salem',
+    postalCode: '636001',
+    addressRegion: 'Tamil Nadu',
+    addressCountry: 'IN',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 11.6516393, longitude: 78.1608556 },
+  openingHours: 'Mo-Su 10:00-21:30',
+  url: site + path,
+};
+const helpAfter = 'lighting';
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{L.title}</title>
+    <meta name="description" content={L.description} />
+    <meta name="theme-color" content="#f4f7fb" />
+    <link rel="canonical" href={site + path} />
+    <link rel="alternate" hreflang="en" href={site + '/'} />
+    <link rel="alternate" hreflang="ta" href={site + '/ta/'} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={L.title} />
+    <meta property="og:description" content={L.description} />
+    <meta property="og:image" content={site + '/og.png'} />
+    <meta property="og:type" content="website" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body data-lang={lang}>
+    <a class="skip" href="#products">{L.nav.products}</a>
+
+    <header class="topbar">
+      <a class="brand" href={path} aria-label={shop.name[lang]}>
+        <span class="brand-mark" set:html={mark} />
+        <span class="brand-word">Sri Ambica <b>Electricals</b></span>
+      </a>
+      <nav class="topnav" aria-label="Sections">
+        <a href="#products">{L.nav.products}</a>
+        <a href="#offers">{L.nav.offers}</a>
+        <a href="#visit">{L.nav.visit}</a>
+      </nav>
+      <a class="lang" href={L.other.href} hreflang={alt} lang={alt}>{L.other.label}</a>
+      <a class="btn btn-live btn-sm" href={waLink(L.waGeneral)} target="_blank" rel="noopener">
+        <span class="ic" set:html={icons.whatsapp} /><span class="hide-sm">WhatsApp</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-mark">
+          <div class="mark-stage">
+            <div class="mark-flat" set:html={mark} />
+            <canvas id="logo3d" aria-hidden="true"></canvas>
+          </div>
+        </div>
+        <div class="hero-copy">
+          <h1 id="hero-title" class="wordmark">
+            <span>Sri</span> <span>Ambica</span> <span class="live">Electricals</span>
+          </h1>
+          <p class="script-name" lang={lang === 'en' ? 'ta' : 'en'}>{lang === 'en' ? shop.name.ta : shop.name.en}</p>
+          <p class="promise">{L.promise}</p>
+          <div class="actions">
+            <a class="btn btn-live" href={waLink(L.waGeneral)} target="_blank" rel="noopener">
+              <span class="ic" set:html={icons.whatsapp} />{L.whatsapp}
+            </a>
+            <a class="btn btn-ink" href={`tel:${shop.phoneTel}`}>
+              <span class="ic" set:html={icons.phone} />{L.call}
+            </a>
+          </div>
+          <p class="meter" id="status" data-open={L.open(closeAt)} data-closed={L.closed(openAt)}>
+            <span class="meter-dot" aria-hidden="true"></span>
+            <span class="meter-text">{L.hoursLine}</span>
+          </p>
+          <address class="hero-address">
+            <span class="ic" set:html={icons.pin} />
+            <span>{shop.address[lang][0]}, {shop.address[lang][2]}, {shop.address[lang][3]}</span>
+          </address>
+          <p class="rating"><span class="ic star" set:html={icons.star} /><b>{shop.rating}</b> {L.rating}</p>
+        </div>
+      </section>
+
+      <nav class="board" id="products" aria-labelledby="board-title">
+        <div class="board-head">
+          <h2 id="board-title" class="board-title">{L.board}</h2>
+          <p class="board-hint">{L.boardHint}</p>
+        </div>
+        <ol class="db" role="list">
+          {categories.map((c, i) => (
+            <li>
+              <a class="mcb" href={`#${c.id}`} data-target={c.id}>
+                <span class="mcb-body" aria-hidden="true">
+                  <span class="mcb-way">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="mcb-lever"></span>
+                </span>
+                <span class="mcb-label">{c.name[lang]}</span>
+              </a>
+            </li>
+          ))}
+          <li>
+            <a class="mcb mcb-offer" href="#offers" data-target="offers">
+              <span class="mcb-body" aria-hidden="true">
+                <span class="mcb-way">%</span>
+                <span class="mcb-lever"></span>
+              </span>
+              <span class="mcb-label">{L.nav.offers}</span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="diagram">
+        <div class="bus" aria-hidden="true"><span class="bus-live"></span></div>
+
+        {categories.map((c) => (
+          <>
+            <section class="circuit" id={c.id} data-circuit aria-labelledby={`${c.id}-h`}>
+              <div class="circuit-side">
+                <span class="breaker" set:html={symbols.breaker} />
+                <span class="branch" aria-hidden="true"></span>
+                <span class="lamp" set:html={symbols.lamp} />
+                <div class="circuit-title">
+                  <span class="kind" set:html={symbols[c.symbol]} />
+                  <h2 id={`${c.id}-h`}>{c.name[lang]}</h2>
+                  <p class="alt-name" lang={alt}>{c.name[alt]}</p>
+                </div>
+              </div>
+              <div class="circuit-body">
+                <p class="circuit-note">{c.note[lang]}</p>
+                <ul class="items" role="list">
+                  {c.items.map((it) => (
+                    <li class="item">
+                      <span class="item-name">{it[lang]}</span>
+                      <span class="leader" aria-hidden="true"></span>
+                      <span class="item-spec">{it.spec[lang]}</span>
+                      <a
+                        class="ask"
+                        href={waLink(`${L.waGreeting} ${it.en}${lang === 'ta' ? ' / ' + it.ta : ''}`)}
+                        target="_blank"
+                        rel="noopener"
+                        aria-label={L.askLabel(it[lang])}
+                      >
+                        {L.askPrice}<span class="ic" set:html={icons.arrow} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+            {c.id === helpAfter && (
+              <aside class="circuit help" data-circuit aria-labelledby="help-h">
+                <div class="circuit-side">
+                  <span class="breaker" set:html={symbols.breaker} />
+                  <span class="branch" aria-hidden="true"></span>
+                  <span class="lamp" set:html={symbols.lamp} />
+                </div>
+                <div class="circuit-body help-body">
+                  <h2 id="help-h">{L.helpTitle}</h2>
+                  <p>{L.helpBody}</p>
+                  <a class="btn btn-live" href={waLink(L.waHelp)} target="_blank" rel="noopener">
+                    <span class="ic" set:html={icons.whatsapp} />{L.helpCta}
+                  </a>
+                </div>
+              </aside>
+            )}
+          </>
+        ))}
+
+        <section class="circuit offers" id="offers" data-circuit aria-labelledby="offers-h" aria-live="polite">
+          <div class="circuit-side">
+            <span class="breaker" set:html={symbols.breaker} />
+            <span class="branch" aria-hidden="true"></span>
+            <span class="lamp" set:html={symbols.lamp} />
+            <div class="circuit-title">
+              <span class="kind kind-pct" aria-hidden="true">%</span>
+              <h2 id="offers-h">{L.offersTitle}</h2>
+              <p class="alt-name" lang={alt}>{t[alt].offersTitle}</p>
+            </div>
+          </div>
+          <div class="circuit-body">
+            <ul class="offer-list" role="list" id="offer-list" data-until={lang}></ul>
+            <div class="offer-empty" id="offer-empty">
+              <p>{L.offersEmpty}</p>
+              <a class="btn btn-ink" href={waLink(L.waGeneral + ' ' + L.offersCta)} target="_blank" rel="noopener">
+                <span class="ic" set:html={icons.whatsapp} />{L.offersCta}
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="circuit plate-circuit" data-circuit aria-labelledby="plate-h">
+          <div class="circuit-side">
+            <span class="breaker" set:html={symbols.breaker} />
+            <span class="branch" aria-hidden="true"></span>
+            <span class="lamp" set:html={symbols.lamp} />
+          </div>
+          <div class="circuit-body">
+            <div class="plate">
+              <div class="plate-head">
+                <span class="plate-mark" set:html={mark} />
+                <div>
+                  <h2 id="plate-h">{L.plateTitle}</h2>
+                  <p class="plate-sub">{shop.tagline[lang]}</p>
+                </div>
+              </div>
+              <dl class="plate-rows">
+                {promises.map((p, i) => (
+                  <div class="plate-row">
+                    <dt>{String.fromCharCode(65 + i)}</dt>
+                    <dd>{p[lang]}</dd>
+                  </div>
+                ))}
+                <div class="plate-row">
+                  <dt>★</dt>
+                  <dd>{L.rating} <b>{shop.rating}</b> / 5</dd>
+                </div>
+              </dl>
+              <p class="plate-foot"><span>{L.gstin}</span> {shop.gstin}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="circuit visit" id="visit" data-circuit aria-labelledby="visit-h">
+          <div class="circuit-side">
+            <span class="breaker earth" set:html={symbols.earth} />
+            <span class="branch" aria-hidden="true"></span>
+            <span class="lamp" set:html={symbols.lamp} />
+            <div class="circuit-title">
+              <span class="kind" set:html={symbols.supply} />
+              <h2 id="visit-h">{L.visitTitle}</h2>
+              <p class="alt-name" lang={alt}>{t[alt].visitTitle}</p>
+            </div>
+          </div>
+          <div class="circuit-body visit-body">
+            <figure class="shop-photo">
+              <img src="/shop-counter.webp" width="848" height="478" loading="lazy" decoding="async" alt={L.photoAlt} />
+            </figure>
+            <div class="visit-info">
+              <p class="visit-lede">{L.visitBody}</p>
+              <address>
+                {shop.address[lang].map((line) => <span>{line}</span>)}
+              </address>
+              <p class="visit-hours">{L.hoursLine}</p>
+              <dl class="contacts">
+                <div>
+                  <dt>{L.phone}</dt>
+                  <dd>{shop.phones.map((c, i) => (<><a href={`tel:${c.tel}`}>{c.display}</a>{i < shop.phones.length - 1 ? ' · ' : ''}</>))}</dd>
+                </div>
+                <div>
+                  <dt>{L.cell}</dt>
+                  <dd><a href={`tel:${shop.mobile.tel}`}>{shop.mobile.display}</a> <span class="muted">· {L.askFor(shop.contactPerson)}</span></dd>
+                </div>
+                <div><dt>{L.email}</dt><dd><a href={`mailto:${shop.email}`}>{shop.email}</a></dd></div>
+              </dl>
+              <div class="actions">
+                <a class="btn btn-live" href={shop.directionsUrl} target="_blank" rel="noopener">
+                  <span class="ic" set:html={icons.pin} />{L.directions}
+                </a>
+                <a class="btn btn-ink" href={`tel:${shop.phoneTel}`}>
+                  <span class="ic" set:html={icons.phone} />{L.call}
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <span class="foot-mark" set:html={mark} />
+      <p>{L.footer}</p>
+      <p class="foot-links">
+        <a href={shop.mapsUrl} target="_blank" rel="noopener">Google Maps</a>
+        <a href={L.other.href} hreflang={alt} lang={alt}>{L.other.label}</a>
+      </p>
+    </footer>
+
+    <script>
+      import '../scripts/page.js';
+    </script>
+  </body>
+</html>
