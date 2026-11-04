@@ -15,11 +15,11 @@ Delegated: Astro with static output. The catalogue-and-enquiry model needs no se
 Sri Ambica Marketing, trading as Sri Ambica Electricals (ஶ்ரீ அம்பிகா மார்கெட்டிங், ஶ்ரீ அம்பிகா எலக்ட்ரிக்கல்ஸ்). Electrical products wholesaler, authorised distributor for Salem and Namakkal districts (the card shows the GM "Switch to a better world" mark beside this line). Tagline on their card: "Good ideas for a better living".
 
 - Address: Siva Complex (Old Hema Lodge), near Kirthika Pipes, 20, Chittu Koil Street, Salem 636 001, Tamil Nadu. Plus code M526+M8. Map pin 11.6516393, 78.1608556.
-- Sri Ambica Electricals' own card (Fybros co-branded): contact Arun Jain, mobile 97895 20634; phone 0427 226 5201; No. 20/72, Siva Complex, Chittu Koil Street; GSTIN 33AFAPP3283P1Z3. The site uses these details, and WhatsApp goes to 97895 20634 (not confirmed as a WhatsApp number).
+- Sri Ambica Electricals' own card (Fybros co-branded): contact Arun Jain, mobile 97895 20634; phone 0427 226 5201; No. 20/72, Siva Complex, Chittu Koil Street; GSTIN 33AFAPP3283P1Z3. The site uses these details, and WhatsApp goes to 97895 20634 (confirmed by the owner, 2026-11-04).
 - Sri Ambica Marketing's card (sister concern, same premises): phone 0427 497 1954 (also on Google), cell 73058 39396 and 86670 28928.
 - Email ambicamkt.salem@gmail.com and GSTIN 33ACXPL5787C1Z4 belong to Sri Ambica Marketing.
 - Brands on record: GM (authorised distributor, Marketing card), Fybros (Electricals card), Philips (shop video).
-- Hours on Google: Wednesday 10 AM to 9:30 PM (other days not shown; assume the same and say "call before visiting on Sundays").
+- Hours: open every day, 10 AM to 9:30 PM (confirmed by the owner, 2026-11-04).
 - Google rating 4.8 (review count not visible).
 - Logo (Sri Ambica Electricals, the brand this site uses): a blue pipe drawn as an "S" inside a house outline, a tap on the middle run and a dripping tap on the bottom run; wordmark SRI / AMBICA / ELECTRICALS in a squared bold sans, blue. The shop sign sets "Sri Ambica" in red and "Electricals" in blue beside the icon and a yellow bulb. Source: the shop's promo video (user-supplied, 2026-11-04). The card's "SAM" monogram belongs to the Sri Ambica Marketing trading name.
 - Range seen in the shop video: Philips home appliances (steam irons, mixer grinders, kettles) and PVC pipes, besides the card's switches, wires & cables, LED, fans and MCBs. The video also shows a Philips gift offer; the owner asked that it NOT appear on the site.
@@ -56,10 +56,11 @@ The store's claim, as stated by the owner, combines four things: trade prices, a
 
 Open decisions, not yet provided:
 
-- Which number takes WhatsApp; full weekly hours.
 - Brands stocked beyond the distributorship, the full product list, and prices.
 - Delivery area and terms.
 - Whether trade or bulk prices are shown publicly or given on request.
+
+The owner confirmed on 2026-11-04 that the contact details, hours, the distributorship line, the shared email and the Tamil copy are fine as published.
 
 ## Evidence on Hand
 

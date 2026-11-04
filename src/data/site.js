@@ -23,7 +23,7 @@ export const shop = {
   },
   mapsUrl: 'https://maps.google.com/?cid=10179459627126105073',
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=11.6516393,78.1608556',
-  // Google shows 10 AM – 9:30 PM; the same hours are assumed for every day.
+  // Confirmed by the owner: open every day, 10 AM – 9:30 PM.
   hours: { open: [10, 0], close: [21, 30] },
   rating: '4.8',
 };
@@ -165,7 +165,7 @@ export const t = {
     boardHint: 'Switch a circuit to jump to it',
     open: (close) => `OPEN NOW · CLOSES ${close}`,
     closed: (open) => `CLOSED · OPENS ${open}`,
-    hoursLine: 'Open 10 AM – 9:30 PM · call before visiting on Sundays and holidays',
+    hoursLine: 'Open every day · 10 AM – 9:30 PM',
     rating: 'Google rating',
     helpTitle: 'Not sure which one you need?',
     helpBody: 'Send a photo of the job on WhatsApp. We will tell you exactly what to buy, and what it costs.',
@@ -206,7 +206,7 @@ export const t = {
     boardHint: 'ஒரு சர்க்யூட்டை அழுத்தினால் அந்தப் பகுதிக்குச் செல்லும்',
     open: (close) => `இப்போது திறந்துள்ளது · ${close}க்கு மூடப்படும்`,
     closed: (open) => `மூடப்பட்டுள்ளது · ${open}க்கு திறக்கும்`,
-    hoursLine: 'காலை 10 – இரவு 9:30 வரை · ஞாயிறு & விடுமுறை நாட்களில் வருமுன் அழைக்கவும்',
+    hoursLine: 'தினமும் திறந்திருக்கும் · காலை 10 – இரவு 9:30',
     rating: 'Google மதிப்பீடு',
     helpTitle: 'எது தேவை என்று தெரியவில்லையா?',
     helpBody: 'வேலையின் புகைப்படத்தை WhatsApp-ல் அனுப்புங்கள். என்ன வாங்க வேண்டும், எவ்வளவு ஆகும் என்று சரியாகச் சொல்கிறோம்.',
