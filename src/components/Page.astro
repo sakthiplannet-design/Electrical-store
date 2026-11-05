@@ -148,26 +148,6 @@ const ld = {
         </ul>
       </section>
 
-      <section class="showroom" aria-labelledby="showroom-title">
-        <div class="section-head">
-          <h2 id="showroom-title">{L.showroomTitle}</h2>
-          <p class="section-lede">{L.showroomLede}</p>
-        </div>
-        <div class="showroom-stage" id="showroom">
-          <canvas id="showroom3d" aria-hidden="true"></canvas>
-          <ul class="showroom-fallback" role="list">
-            {L.showroom.map(([name, , pid]) => (
-              <li><img src={productImages[pid]} width="600" height="600" loading="lazy" decoding="async" alt={name} /></li>
-            ))}
-          </ul>
-        </div>
-        <ul class="showroom-labels" role="list">
-          {L.showroom.map(([name, cat]) => (
-            <li><a href="#products" data-jump-cat={cat}>{name}<span class="ic" set:html={icons.arrow} /></a></li>
-          ))}
-        </ul>
-      </section>
-
       <section class="catalog" id="products" aria-labelledby="catalog-title">
         <div class="section-head">
           <h2 id="catalog-title">{L.catalogTitle}</h2>

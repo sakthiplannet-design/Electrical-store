@@ -92,7 +92,6 @@ Pill buttons, chips and steppers; 20px cards; 24px panels; product art drawn in 
 ## Components
 
 - **Toran**: 25 bulbs that cycle through five blink patterns (chase, alternate, twinkle, wave, burst) every 6 s; fireworks burst on a canvas behind the hero. Both stop under reduced motion and pause off screen.
-- **3D showroom**: Three.js models of a ceiling fan (spinning), an LED bulb (glowing) and a modular switch plate (flicking), drag to rotate; product photos replace it on software-only WebGL or before it loads.
 - **Brand strip**: official GM, Fybros and Philips logos on white badges.
 - **Catalogue layout**: category sidebar with counts and search on the left, results on the right; on phones the sidebar becomes a sticky search plus a scrolling category row.
 - **Product card**: official product photo on white (from the manufacturer, `src/data/product-images.js`) with a category badge, or a category-toned art tile when no photo exists, brand, name, spec, optional size/rating select, quantity stepper, "Add to list" (turns green "Added" briefly).

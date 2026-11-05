@@ -317,38 +317,6 @@ if (fw && !reduced) {
   requestAnimationFrame(tick);
 }
 
-/* 3D showroom on hardware WebGL; product photos otherwise (`?force3d` overrides). */
-function canWebGL() {
-  try {
-    const c = document.createElement('canvas');
-    const gl = c.getContext('webgl2') || c.getContext('webgl');
-    if (!gl) return false;
-    if (new URLSearchParams(location.search).has('force3d')) return true;
-    const info = gl.getExtension('WEBGL_debug_renderer_info');
-    const name = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
-    return !/swiftshader|llvmpipe|software|basic render/i.test(name);
-  } catch {
-    return false;
-  }
-}
-const stage3d = document.getElementById('showroom');
-const canvas3d = document.getElementById('showroom3d');
-if (stage3d && canvas3d && canWebGL()) {
-  const start = () =>
-    import('./showroom3d.js')
-      .then(({ mountShowroom }) => mountShowroom(canvas3d, { reducedMotion: reduced, onReady: () => stage3d.classList.add('has-3d') }))
-      .catch(() => {});
-  new IntersectionObserver(
-    ([e], obs) => {
-      if (e.isIntersecting) {
-        obs.disconnect();
-        start();
-      }
-    },
-    { rootMargin: '300px' },
-  ).observe(stage3d);
-}
-
 /* Hero shelf tiles jump into the catalogue with their category selected. */
 for (const tile of document.querySelectorAll('[data-jump-cat]')) {
   tile.addEventListener('click', () => {
