@@ -1,0 +1,13 @@
+{
+  "source": "DESIGN.md",
+  "motion": {
+    "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "lamp": "color and box-shadow 300-400ms ease-out when a circuit becomes live",
+    "busbar": "scaleY tied to scroll progress; full under prefers-reduced-motion",
+    "mcb-lever": "translateY 200ms ease-out",
+    "logo3d": "idle sway +/-0.32 rad, pointer tilt, drop cycle 2.8s; static under reduced motion; paused offscreen; skipped on software WebGL"
+  },
+  "focus": "3px solid live-blue outline, 3px offset",
+  "selection": "live-blue background, white text",
+  "shadows": { "button-primary-hover": "0 6px 16px -6px rgb(18 78 166 / 0.55)", "lamp-live": "0 0 0 8px rgb(255 197 49 / 0.32)" }
+}
